@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 int main(void) {
-  int lumens, watts;
+  int lumens, watts, test;
 
   printf("Type lumens => ");
   scanf("%d", &watts);
