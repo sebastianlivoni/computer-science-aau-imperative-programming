@@ -12,6 +12,7 @@
 
 #DS_Store
 .DS_Store
+*.DS_Store
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
