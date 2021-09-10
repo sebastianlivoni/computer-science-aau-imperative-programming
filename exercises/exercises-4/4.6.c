@@ -23,12 +23,14 @@ int main(void) {
 		return -1;
 	}
 	
+	//hvis b er større end a så skifter vi dem lige :)
 	if (b > a) {
 		int temp_a = a;
 		a = b;
 		b = temp_a;
 	}
 
+	//fra i=1 indtil a - checker derefter om både (a og b) % i er lig med 0 og hvis det er det så er en en fælles divisor.
 	for (int i = 1; i < a; i++) {
 		(a % i == 0 && b % i == 0) ? sfd = i : 0;
 	}
