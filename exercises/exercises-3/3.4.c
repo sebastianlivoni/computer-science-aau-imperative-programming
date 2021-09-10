@@ -7,35 +7,45 @@
 
 #include <stdio.h>
 
-int main(void) {
-	int num = 4980;
+/*void printTime(int time, char sing[], char plur[]) {
+	if (time) {
+		(time == 1) ? printf("%d %s", time, sing) : printf("%d %s", time,plur);
+	}
+}*/
 
-	//printf("Enter whole number: ");
-	//scanf("%d", &num);
+int main(void) {
+	int num;
+
+	printf("Enter whole number: ");
+	scanf("%d", &num);
 
 	const int seconds = num % 60;
 	const int minutes = num / 60 % 60;
 	const int hours = num / 3600 % 24; // 60 / 60
 	const int days = num / 86400 % 7; // 60 / 60 / 24
 	const int weeks = num / 604800; // 60 / 60 / 24 / 7
-
-	//printf("%d uger, %d dage, %d timer, %d minutter, %d sekunder.\n", weeks, days, hours, minutes, seconds);
-
-	if (weeks > 0) {
+	
+	if (weeks) {
 		(weeks == 1) ? printf("%d uge", weeks) : printf("%d uger", weeks);
 	}
-	if (days > 0) {
+	if (days) {
+		(weeks) ? (seconds == 0 && minutes == 0 && hours) ? printf(" og ") : printf(", ") : printf("");
 		(days == 1) ? printf("%d dag", days) : printf("%d dage", days);
 	}
-	if (hours > 0) {
+	if (hours) {
+		(weeks || days) ? (seconds == 0 && minutes == 0) ? printf(" og ") : printf(", ") : printf("");
 		(hours == 1) ? printf("%d time", hours) : printf("%d timer", hours);
 	}
-	if (minutes > 0) {
+	if (minutes) {
+		(weeks || days || hours) ? (seconds == 0) ? printf(" og ") : printf(", ") : printf("");
 		(minutes == 1) ? printf("%d minut", minutes) : printf("%d minutter", minutes);
 	}
-	if (seconds > 0) {
+	if (seconds) {
+		(minutes || hours || days || weeks) ? printf(" og ") : printf("");
 		(seconds == 1) ? printf("%d sekund", seconds) : printf("%d sekunder", seconds);
 	}
+
+	printf("\n");
 
 	return 0;
 }
