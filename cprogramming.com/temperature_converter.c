@@ -23,7 +23,7 @@ int main(void) {
 
   if (start_temp_celcius < LOWER_LIMIT) {
     printf("Start temparature must be >= 0\n");
-    return -1;
+    return 1;
   }
 
   //end temp
@@ -32,7 +32,7 @@ int main(void) {
 
   if (end_temp_celcius < start_temp_celcius) {
     printf("Higher limit is less than lower limit!\n");
-    return -1;
+    return 1;
   } else if (end_temp_celcius > UPPER_LIMIT) {
     printf("End temperature is higher than upper limit - not ok!\n");
   }
@@ -43,7 +43,7 @@ int main(void) {
   
   if (steps > end_temp_celcius - start_temp_celcius) {
     printf("Step size must be in the difference between %.0f and %.0f\n", start_temp_celcius, end_temp_celcius);
-    return -1;
+    return 1;
   }
 
   printf("Celcius%12sFahrenheit\n", "");
