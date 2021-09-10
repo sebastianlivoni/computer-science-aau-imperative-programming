@@ -1,8 +1,13 @@
-/*
- * Convert seconds to weeks, days, hours, minutes and seconds.
- * http://people.cs.aau.dk/~normark/impr-c/intro-circle-example-slide-exercise-1.html
+/* 
+ * Title: Convert seconds to weeks, days, hours, minutes and seconds.
+ * Description: Converting seconds into weeks, days, hours, minutes and seconds 
+ * Assignment: 2.5
+ * Link to assignment: http://people.cs.aau.dk/~normark/impr-c/intro-circle-example-slide-exercise-1.html
+ * 
+ * Programmer: Sebastian Livoni Larsen
+ * Date completed: September 4, 2021
+ * Instructor: Kurt Nørmark * Class: AAL E21
  */
-
 
 #include <stdio.h>
 
