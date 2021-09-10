@@ -1,8 +1,12 @@
 /* 
- * Title: Timer, minutter og sekunder - igen
- * Description: Converting seconds into weeks, days, hours, minutes and seconds 
- * Assignment: 3.4
- * Link to assignment: http://people.cs.aau.dk/%7Enormark/impr-c/control-conditional-exp-slide-exercise-1.html
+ * Title: Ligefrem programmering af 'største fælles divisor'
+ * Description: Største fælles divisor samt gentagning af beslutningen.
+ * Assignment: 4.6
+ * Link to assignment: http://people.cs.aau.dk/%7Enormark/impr-c/more-control-more-exercises-slide-exercise-2.html
+ * 
+ * Programmer: Sebastian Livoni Larsen
+ * Date completed: September 10, 2021
+ * Instructor: Kurt Nørmark * Class: AAL E21
  */
 
 #include <stdio.h>
@@ -23,7 +27,6 @@ int main(void) {
 		int temp_a = a;
 		a = b;
 		b = temp_a;
-		
 	}
 
 	for (int i = 1; i < a; i++) {

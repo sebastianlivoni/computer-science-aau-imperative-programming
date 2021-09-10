@@ -3,6 +3,10 @@
  * Description: Converting seconds into weeks, days, hours, minutes and seconds 
  * Assignment: 3.4
  * Link to assignment: http://people.cs.aau.dk/%7Enormark/impr-c/control-conditional-exp-slide-exercise-1.html
+ * 
+ * Programmer: Sebastian Livoni Larsen
+ * Date completed: September 8, 2021
+ * Instructor: Kurt Nørmark * Class: AAL E21
  */
 
 #include <stdio.h>
