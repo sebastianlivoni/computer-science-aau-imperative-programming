@@ -17,7 +17,6 @@ int main(void) {
   double start_temp_celcius, end_temp_celcius;
   int steps;
 
-
   //start temp
   printf("Please give in a lower limit, limit >= %d: ", LOWER_LIMIT);
   scanf("%lf", &start_temp_celcius);
@@ -51,8 +50,8 @@ int main(void) {
   printf("-------%12s----------\n", "");
 
   while(start_temp_celcius <= end_temp_celcius) {
-    //Fahrenheit = (C * 1,8) + 32
 
+    //Fahrenheit = (C * 1,8) + 32
     printf("%f%10s%f\n", start_temp_celcius, "", (start_temp_celcius * 1.8) + 32);
     start_temp_celcius += steps;
   }
