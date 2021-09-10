@@ -23,6 +23,7 @@ int main(void) {
 		int temp_a = a;
 		a = b;
 		b = temp_a;
+		
 	}
 
 	for (int i = 1; i < a; i++) {

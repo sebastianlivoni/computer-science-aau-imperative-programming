@@ -1,17 +1,11 @@
 /* 
  * Title: Timer, minutter og sekunder - igen
- * Description: Converting seconds into weeks, days, ..., seconds 
+ * Description: Converting seconds into weeks, days, hours, minutes and seconds 
  * Assignment: 3.4
  * Link to assignment: http://people.cs.aau.dk/%7Enormark/impr-c/control-conditional-exp-slide-exercise-1.html
  */
 
 #include <stdio.h>
-
-/*void printTime(int time, char sing[], char plur[]) {
-	if (time) {
-		(time == 1) ? printf("%d %s", time, sing) : printf("%d %s", time,plur);
-	}
-}*/
 
 int main(void) {
 	int num;
@@ -29,19 +23,19 @@ int main(void) {
 		(weeks == 1) ? printf("%d uge", weeks) : printf("%d uger", weeks);
 	}
 	if (days) {
-		(weeks) ? (seconds == 0 && minutes == 0 && hours) ? printf(" og ") : printf(", ") : printf("");
+		(weeks) ? (seconds == 0 && minutes == 0 && hours) ? printf(" og ") : printf(", ") : 0;
 		(days == 1) ? printf("%d dag", days) : printf("%d dage", days);
 	}
 	if (hours) {
-		(weeks || days) ? (seconds == 0 && minutes == 0) ? printf(" og ") : printf(", ") : printf("");
+		(weeks || days) ? (seconds == 0 && minutes == 0) ? printf(" og ") : printf(", ") : 0;
 		(hours == 1) ? printf("%d time", hours) : printf("%d timer", hours);
 	}
 	if (minutes) {
-		(weeks || days || hours) ? (seconds == 0) ? printf(" og ") : printf(", ") : printf("");
+		(weeks || days || hours) ? (seconds == 0) ? printf(" og ") : printf(", ") : 0;
 		(minutes == 1) ? printf("%d minut", minutes) : printf("%d minutter", minutes);
 	}
 	if (seconds) {
-		(minutes || hours || days || weeks) ? printf(" og ") : printf("");
+		(minutes || hours || days || weeks) ? printf(" og ") : 0;
 		(seconds == 1) ? printf("%d sekund", seconds) : printf("%d sekunder", seconds);
 	}
 
