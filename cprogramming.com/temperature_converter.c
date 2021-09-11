@@ -1,4 +1,4 @@
-/* 
+/*
  * Title: Temperature Converter Challenge
  * Description: Write a program that takes in three arguments, a start temperature (in Celsius), an end temperature (in Celsius) and a step size and print out fahrenheit.
  * Assignment: From cprogramming.com
