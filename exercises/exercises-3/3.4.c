@@ -1,5 +1,5 @@
 /* 
- * Title: Timer, minutter og sekunder - igen
+ * Title: Weeks, days, hours, minutes and seconds with "and" and ","
  * Description: Converting seconds into weeks, days, hours, minutes and seconds 
  * Assignment: 3.4
  * Link to assignment: http://people.cs.aau.dk/%7Enormark/impr-c/control-conditional-exp-slide-exercise-1.html
