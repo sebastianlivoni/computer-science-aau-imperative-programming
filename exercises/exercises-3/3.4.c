@@ -5,7 +5,7 @@
  * Link to assignment: http://people.cs.aau.dk/%7Enormark/impr-c/control-conditional-exp-slide-exercise-1.html
  * 
  * Programmer: Sebastian Livoni Larsen
- * Date completed: September 8, 2021
+ * Date completed: September 13, 2021
  * Instructor: Kurt Nørmark * Class: AAL E21
  */
 
@@ -27,23 +27,25 @@ int main(void) {
 	const int days = num / SECONDS_PER_DAY % 7;
 	const int weeks = num / SECONDS_PER_WEEK;
 	
-	if (weeks) {
-		(weeks == 1) ? printf("%d uge", weeks) : printf("%d uger", weeks);
-	}
+	if (weeks) (weeks == 1) ? printf("%d uge", weeks) : printf("%d uger", weeks);
+
 	if (days) {
-		(weeks) ? (seconds == 0 && minutes == 0 && hours) ? printf(" og ") : printf(", ") : 0;
+		if (weeks) (seconds == 0 && minutes == 0 && hours) ? printf(" og ") : printf(", ");
 		(days == 1) ? printf("%d dag", days) : printf("%d dage", days);
 	}
+
 	if (hours) {
-		(weeks || days) ? (seconds == 0 && minutes == 0) ? printf(" og ") : printf(", ") : 0;
+		if (weeks || days) (seconds == 0 && minutes == 0) ? printf(" og ") : printf(", ");
 		(hours == 1) ? printf("%d time", hours) : printf("%d timer", hours);
 	}
+
 	if (minutes) {
-		(weeks || days || hours) ? (seconds == 0) ? printf(" og ") : printf(", ") : 0;
+		if (weeks || days || hours) (seconds == 0) ? printf(" og ") : printf(", ");
 		(minutes == 1) ? printf("%d minut", minutes) : printf("%d minutter", minutes);
 	}
+	
 	if (seconds) {
-		(minutes || hours || days || weeks) ? printf(" og ") : 0;
+		if (minutes || hours || days || weeks) printf(" og ");
 		(seconds == 1) ? printf("%d sekund", seconds) : printf("%d sekunder", seconds);
 	}
 
