@@ -10,6 +10,10 @@
  */
 
 #include <stdio.h>
+#define SECONDS_PER_MINUTE 60
+#define SECONDS_PER_HOUR (60 * SECONDS_PER_MINUTE)
+#define SECONDS_PER_DAY (24 * SECONDS_PER_HOUR)
+#define SECONDS_PER_WEEK (7 * SECONDS_PER_DAY)
 
 int main(void) {
     int num;
@@ -18,10 +22,10 @@ int main(void) {
     scanf("%d", &num);
 
     const int seconds = num % 60;
-    const int minutes = num / 60 % 60;
-    const int hours = num / 3600 % 24; // 60 / 60
-    const int days = num / 86400 % 7; // 60 / 60 / 24
-    const int weeks = num / 604800; // 60 / 60 / 24 / 7
+    const int minutes = num / SECONDS_PER_MINUTE % 60;
+    const int hours = num / SECONDS_PER_HOUR % 24; // 60 / 60
+    const int days = num / SECONDS_PER_DAY % 7; // 60 / 60 / 24
+    const int weeks = num / SECONDS_PER_WEEK; // 60 / 60 / 24 / 7
 
     printf("%d uger, %d dage, %d timer, %d minutter, %d sekunder.\n", weeks, days, hours, minutes, seconds);
 
