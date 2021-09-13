@@ -1,8 +1,8 @@
 /* 
  * Title: x-y coordinate Quadrant
  * Description: Write a program that takes the x–y coordinates of a point in the Cartesian plane and prints a message telling either an axis on which the point lies or the quadrant in which it is found.
- * Assignment: Project 6
- * Link to assignment: Page 232
+ * Assignment: Page 232 Project 6
+ * Link to assignment: Book
  * 
  * Programmer: Sebastian Livoni Larsen
  * Date completed: September 13, 2021

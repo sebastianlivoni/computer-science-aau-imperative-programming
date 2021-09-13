@@ -13,6 +13,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#define DELTA 1
 
 int main(void) {
   double r, x, y;
@@ -28,6 +29,13 @@ int main(void) {
   printf("Skriv radius => ");
   scanf("%lf", &r);
 
-  (pow(x, 2) + pow(y, 2) <= pow(r, 2)) ? (pow(x - 1, 2) + pow(y - 4, 2) == pow(r, 2)) ? printf("På periferien") : printf("Inden i\n") : printf("Uden for\n");
+  double left_side = pow(x, 2) + pow(y, 2);
+  double right_side = pow(r, 2);
+
+  (left_side <= right_side)
+    ? (left_side == right_side)
+      ? printf("På periferien\n") 
+      : printf("Inden i\n")
+    : printf("Uden for\n");
 
 }

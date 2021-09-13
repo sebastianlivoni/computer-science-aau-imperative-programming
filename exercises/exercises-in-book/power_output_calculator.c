@@ -14,8 +14,6 @@ int main(void) {
   printf("Type the mass => ");
   scanf("%d", &m);
 
-  
-
   //convert cubic meter to mass
   m = m * 1000;
 
