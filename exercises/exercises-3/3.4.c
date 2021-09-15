@@ -10,7 +10,8 @@
  */
 
 #include <stdio.h>
-#define SECONDS_PER_MINUTE 60
+#include <stdlib.h>
+#define SECONDS_PER_MINUTE (60)
 #define SECONDS_PER_HOUR (60 * SECONDS_PER_MINUTE)
 #define SECONDS_PER_DAY (24 * SECONDS_PER_HOUR)
 #define SECONDS_PER_WEEK (7 * SECONDS_PER_DAY)
@@ -19,7 +20,10 @@ int main(void) {
 	int num;
 
 	printf("Enter whole number: ");
-	scanf("%d", &num);
+	if (!scanf("%d", &num)) {
+		printf("Please write a integer\n");
+		return EXIT_FAILURE;
+	}
 
 	const int seconds = num % 60;
 	const int minutes = num / SECONDS_PER_MINUTE % 60;
@@ -51,5 +55,5 @@ int main(void) {
 
 	printf("\n");
 
-	return 0;
+	return EXIT_SUCCESS;
 }
