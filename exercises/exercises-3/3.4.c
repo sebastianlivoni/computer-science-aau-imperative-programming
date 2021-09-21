@@ -20,18 +20,22 @@ int main(void) {
 	int num;
 
 	printf("Enter whole number: ");
+
+	//hvis scanf ikke finder et integer så returner fejl
 	if (!scanf("%d", &num)) {
-		printf("Please write a integer\n");
-		return EXIT_FAILURE;
+		printf("Please write an integer\n");
+		exit(EXIT_FAILURE);
 	}
 
-	const int seconds = num % 60;
-	const int minutes = num / SECONDS_PER_MINUTE % 60;
-	const int hours = num / SECONDS_PER_HOUR % 24;
-	const int days = num / SECONDS_PER_DAY % 7;
 	const int weeks = num / SECONDS_PER_WEEK;
+	const int days = num / SECONDS_PER_DAY % 7;
+	const int hours = num / SECONDS_PER_HOUR % 24;
+	const int minutes = num / SECONDS_PER_MINUTE % 60;
+	const int seconds = num % 60;
 	
-	if (weeks) (weeks == 1) ? printf("%d uge", weeks) : printf("%d uger", weeks);
+	if (weeks) {
+		(weeks == 1) ? printf("%d uge", weeks) : printf("%d uger", weeks);
+	}
 
 	if (days) {
 		if (weeks) (seconds == 0 && minutes == 0 && hours) ? printf(" og ") : printf(", ");
