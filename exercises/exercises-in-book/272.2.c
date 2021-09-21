@@ -20,34 +20,28 @@
  */
 
 #include <stdio.h>
-#define COUNT_FROM 0
 #define COUNT_TO 5
-
-/*int pyramid(max) {
-  if (max > 5) {
-    return 0;
-  } else {
-    printf("%d", max);
-    return pyramid(max + 1);
-  }
-}*/
 
 int main(void) {
 
-  int count_to_next = 1;
-  while (count_to_next <= COUNT_TO + 1) {
-    for (int i = 0; i < count_to_next; i++) {
+  //Count up
+  int count_next = 1;
+  while (count_next <= COUNT_TO + 1) {
+    for (int i = 0; i < count_next; i++) {
       printf("%d ", i);
     }
-    count_to_next += 1;
+    count_next += 1;
     printf("\n");
   }
-  count_to_next = 5;
-  while (count_to_next > 0) {
-    for (int i = 0; i < count_to_next; i++) {
+
+  //Count down
+  count_next = COUNT_TO;
+  while (count_next > 0) {
+    for (int i = 0; i < count_next; i++) {
       printf("%d ", i);
     }
-    count_to_next -= 1;
+    count_next -= 1;
     printf("\n");
   }
+
 }
