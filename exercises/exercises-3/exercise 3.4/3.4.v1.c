@@ -38,7 +38,7 @@ int main(void) {
 	}
 
 	if (days) {
-		if (weeks) (seconds == 0 && minutes == 0 && hours) ? printf(" og ") : printf(", ");
+		if (weeks) (seconds == 0 && minutes == 0 && hours == 0) ? printf(" og ") : printf(", ");
 		(days == 1) ? printf("%d dag", days) : printf("%d dage", days);
 	}
 
