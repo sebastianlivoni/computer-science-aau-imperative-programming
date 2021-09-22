@@ -10,32 +10,30 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(void) {
 
-  int a, b, sfd;
+  int temp_a, temp_b, sfd;
 
-	printf("Enter a and b => ");
-	scanf("%d %d", &a, &b);
+	do {
+		printf("Enter a and b => ");
+		if (scanf(" %d %d", &temp_a, &temp_b) != 2) {
+			printf("Der gik sgu noget galt / du stoppede det med vilje!\n");
+			return EXIT_FAILURE;
+		}
+		
+		//hvis temp_b er større end temp_a så skifter vi dem lige :)
+		int a = temp_a >= temp_b ? temp_a : temp_b;
+		int b = temp_b >= temp_a ? temp_a : temp_b;
 
-	if (a < 1 || b < 0) {
-		printf("Et af de to tal er negative eller lig med 0...");
-		return -1;
-	}
-	
-	//hvis b er større end a så skifter vi dem lige :)
-	if (b > a) {
-		int temp_a = a;
-		a = b;
-		b = temp_a;
-	}
+		//fra i=1 indtil a - checker derefter om både (a og b) % i er lig med 0 og hvis det er det så er en en fælles divisor.
+		for (int i = 1; i <= a; i++) {
+			if (a % i == 0 && b % i == 0) sfd = i;
+		}
 
-	//fra i=1 indtil a - checker derefter om både (a og b) % i er lig med 0 og hvis det er det så er en en fælles divisor.
-	for (int i = 1; i < a; i++) {
-		(a % i == 0 && b % i == 0) ? sfd = i : 0;
-	}
+		printf("Største fælles divisor: %d\n", sfd);
+	} while (temp_a > 0 && temp_b > 0);
 
-	printf("Største fælles divisor: %d\n", sfd);
-
-	return 0;
+	return EXIT_SUCCESS;
 }
