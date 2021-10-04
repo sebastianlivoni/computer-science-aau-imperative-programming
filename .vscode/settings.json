@@ -11,6 +11,7 @@
     "chrono": "c",
     "limits": "c",
     "ratio": "c",
-    "semaphore": "c"
+    "semaphore": "c",
+    "primes.h": "c"
   }
 }

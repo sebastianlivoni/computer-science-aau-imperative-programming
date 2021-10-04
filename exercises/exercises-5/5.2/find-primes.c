@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "primes.h"
+
 int main(void) {
   
   int i = 1, j = 0, n;
@@ -29,5 +30,5 @@ int main(void) {
 }
 
 
-// gcc primes.o find-primes.c
+// gcc primes.c find-primes.c
 // ./a.out
