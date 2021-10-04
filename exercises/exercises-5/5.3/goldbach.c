@@ -1,8 +1,8 @@
 /*
- * Title: 
- * Description: 
- * Assignment: 
- * Link to assignment: 
+ * Title: Goldbachs Formodning
+ * Description: Goldbachs formodning udtrykker en påstand om at alle lige heltal større end to er summen af to primtal. Denne formodning er hverken bevist eller modbevist. I denne opgave vil vi beskæftige os med følgende variation af påstanden:
+ * Assignment: Opgave 5.3
+ * Link to assignment: http://people.cs.aau.dk/%7Enormark/impr-c/functions-par-ex-2-slide-exercise-2.html
  * 
  * Programmer: Sebastian Livoni Larsen
  * Date completed: October 4, 2021
