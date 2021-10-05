@@ -1,11 +1,11 @@
 /*
- * Title: 
- * Description: 
- * Assignment: 
- * Link to assignment: 
+ * Title: Programmering af en kvadratrodsfunktion
+ * Description: Programmer din egen kvadratrodsfunktion my_sqrt med brug af Newtons metode. Newtons metode gør det muligt for os at finde denne rod. 
+ * Assignment: Opgave 5.6
+ * Link to assignment: http://people.cs.aau.dk/~normark/impr-c/functions-ekstr-opg-slide-exercise-2.html
  * 
  * Programmer: Sebastian Livoni Larsen
- * Date completed: October 4, 2021
+ * Date completed: October 5, 2021
  * Instructor: Kurt Nørmark * Class: AAL E21
  */ 
 
@@ -17,41 +17,41 @@
 
 void compare_sqrts();
 double my_sqrt();
-double newtown_formula();
+double newtons_method();
 
 int main(void) {
-
-  //compare_sqrts(0, 25);
-
-  printf("lol: %.8lf\n", my_sqrt(16));
-
+  compare_sqrts(0, 25);
 }
 
 void compare_sqrts(int start, int end) {
+
+  printf("+-------------+-----------------+-------------+\n");
+  printf("|             |                 |             |\n");
+  printf("|    Number   |  Seb's version  |    Math.h   |\n");
+  printf("|             |                 |             |\n");
   for (double i = start; i <= end; i++) {
-    printf("my_sqrt(%lf): %lf - sqrt(%lf): %lf\n", i, my_sqrt(i), i, sqrt(i));
+    printf("| %10lf  |   %10lf    | %10lf  |\n", i, my_sqrt(i), sqrt(i));
   }
 }
 
 double my_sqrt(double a) {
-  double x = 17;
-  for (int i = 0; i <= 100; i++) {
-    //printf("%lf\n", 3 - (pow(3, 7) - 1000) / 7 * pow(3, 6));
-    //printf("%.13lf\n", 3 - (pow(3, 7) - 1000) / (7 * pow(3, 6)));
-    double new_x = newtown_formula(x);
-    double difference = x - new_x;
-    if (difference <= DELTA) {
-      return new_x;
-    }
-
-    x = new_x;
+  if (a == 0) {
+    return 0;
+  } else if (a < 0) {
+    return NAN;
   }
 
-  return a;
+  double x = a, difference;
 
+  do {
+    double new_x = newtons_method(x, a);
+    difference = x - new_x;
+    x = new_x;
+  } while (difference > DELTA);
+
+  return x;
 }
 
-double newtown_formula(double x) {
-  //return x - (pow(x, 7) - 1000) / (7 * pow(x, 6));
-  return x - (pow(x, 2) - 168) / (2 * x);
+double newtons_method(double x, double a) {
+  return x - (pow(x, 2) - a) / (2 * x);
 }
