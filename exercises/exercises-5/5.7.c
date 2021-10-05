@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//Prototypes declaration
 int sum_iter(int);
 int sum_formula(int);
 int population_projection(double, double, double);
