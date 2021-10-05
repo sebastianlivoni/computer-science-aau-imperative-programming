@@ -14,8 +14,8 @@
 
 //Prototypes declaration
 double calc_discriminant();
-double first_root();
-double second_root();
+double calc_first_root();
+double calc_second_root();
 
 /* Prints roots of the quadratic equation a * x*x + b * x + c = 0 */
 void solveQuadraticEquation(double a, double b, double c){
@@ -30,8 +30,8 @@ void solveQuadraticEquation(double a, double b, double c){
     printf("One root: %f\n", root1);
   }
   else {
-    root1 = first_root(a, b, discriminant);
-    root2 = second_root(a, b, discriminant);
+    root1 = calc_first_root(a, b, discriminant);
+    root2 = calc_second_root(a, b, discriminant);
     printf("Two roots: %f and %f\n", root1, root2);
   }
 
@@ -64,10 +64,10 @@ double calc_discriminant(double a, double b, double c) {
   return b * b - 4 * a * c;
 }
 
-double first_root(double a, double b, double d) {
+double calc_first_root(double a, double b, double d) {
   return (-b + sqrt(d)) / ( 2 * a);
 }
 
-double second_root(double a, double b, double d) {
+double calc_second_root(double a, double b, double d) {
   return (-b - sqrt(d))/(2*a);
 }
