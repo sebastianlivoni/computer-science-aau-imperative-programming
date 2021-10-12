@@ -41,10 +41,10 @@ double my_sqrt(double a) {
     return NAN;
   }
 
-  double x = a, difference;
+  double x = a, difference, new_x;
 
   do {
-    double new_x = newtons_method(x, a);
+    new_x = newtons_method(x, a);
     difference = x - new_x;
     x = new_x;
   } while (difference > DELTA);
