@@ -20,6 +20,4 @@ int main(void) {
   sum += (n - 1) + n;
 
   printf("True or false: %s\n", (n * (n + 1)) / 2 == sum ? "true" : "false");
-
-  //printf("%d %d\n", sum, (n * (n + 1)) / 2);
 }
