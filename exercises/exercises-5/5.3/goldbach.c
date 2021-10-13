@@ -35,7 +35,7 @@ int main(void) {
   for (int i = min; i <= max; i += 2) {
     if (check(i) == 0) {
       printf("Der er sgu sket noget som ikke må ske :(\n");
-      return 0;
+      return EXIT_FAILURE;
     }
   }
 

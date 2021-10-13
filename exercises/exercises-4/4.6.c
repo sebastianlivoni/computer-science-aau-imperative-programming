@@ -28,7 +28,7 @@ int main(void) {
 
 		//fra i=1 indtil a - checker derefter om både (a og b) % i er lig med 0 og hvis det er det så er en en fælles divisor.
 		for (int i = 1; i <= max; i++) {
-			if (a % i == 0 && b % i == 0) sfd = i;
+			if (a % i == 0 && b % i == 0d) sfd = i;
 		}
 
 		printf("Største fælles divisor: %d\n", sfd);
