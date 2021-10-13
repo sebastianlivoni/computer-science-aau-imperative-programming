@@ -21,6 +21,8 @@ double newtons_method();
 
 int main(void) {
   compare_sqrts(0, 25);
+
+  return EXIT_SUCCESS;
 }
 
 void compare_sqrts(int start, int end) {

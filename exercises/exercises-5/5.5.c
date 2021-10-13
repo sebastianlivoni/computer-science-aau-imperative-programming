@@ -14,14 +14,16 @@
 
 //Function declaration
 int isLeapYear();
+int isLeapYear_myversion();
 
 int main(void) {
   int year;
 
-  printf("Is Leap Year? => ");
-  scanf(" %d", &year);
-
-  printf("%s", isLeapYear(year) ? "Yes! It is leap year that year!\n" : "Nope! It is not leap year that year!\n");
+  for (int i = 1900; i <= 2100; i++) {
+    if (isLeapYear(i) != isLeapYear_myversion(i)) {
+      printf("fail: %d: %d og %d", i, isLeapYear(i), isLeapYear_myversion(i));
+    }
+  }
 
 }
 
@@ -34,6 +36,13 @@ int isLeapYear(int year){
   else if (year % 4 == 0)
     res = 1;
   else res = 0;
+  return res;
+}
+
+int isLeapYear_myversion(int year){
+  int res;
+
+  res = year % 400 == 0 || year % 4 == 0 && year % 100 != 0;
 
   return res;
 }
