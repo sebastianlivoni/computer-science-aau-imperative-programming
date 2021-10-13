@@ -3,6 +3,7 @@
 CC = gcc
 CFLAGS = -Wall -pedantic -ansi
 TARGET = goldbach
+.PHONY = clean
 
 $(TARGET): $(TARGET).c
 	gcc $(TARGET).c primes.c -o $(TARGET).out
