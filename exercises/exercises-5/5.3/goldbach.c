@@ -51,7 +51,7 @@ int check(int n) {
   for (int i = 1; i <= max; i += 2) {
     if (is_prime(i) && is_prime(n - i)) {
       //printf("%d = %d + %d\n", n, i, n - i);
-      return 1;
+      return EXIT_SUCCESS;
     }
   }
 

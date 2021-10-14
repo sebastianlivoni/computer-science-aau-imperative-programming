@@ -11,17 +11,18 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 
 //Prototypes declaration
-double calc_discriminant();
-double calc_first_root();
-double calc_second_root();
+double getDiscriminant();
+double getFirstRoot();
+double getSecondRoot();
 
 /* Prints roots of the quadratic equation a * x*x + b * x + c = 0 */
 void solveQuadraticEquation(double a, double b, double c){
   double discriminant, root1, root2;
 
-  discriminant = calc_discriminant(a, b, c);
+  discriminant = getDiscriminant(a, b, c);
 
   if (discriminant < 0)
     printf("No roots\n");
@@ -30,8 +31,8 @@ void solveQuadraticEquation(double a, double b, double c){
     printf("One root: %f\n", root1);
   }
   else {
-    root1 = calc_first_root(a, b, discriminant);
-    root2 = calc_second_root(a, b, discriminant);
+    root1 = getFirstRoot(a, b, discriminant);
+    root2 = getSecondRoot(a, b, discriminant);
     printf("Two roots: %f and %f\n", root1, root2);
   }
 
@@ -51,23 +52,26 @@ int main(void) {
   do {
     /* Third call - coefficents are entered by user outside solveQuadraticEquation */
     printf("Enter coeficients a, b, and c: ");
-    scanf("%lf %lf %lf", &g, &h, &i);
+    if (scanf("%lf %lf %lf", &g, &h, &i) != 3) {
+      printf("Bye! \n");
+      return EXIT_FAILURE;
+    };
     if (g != 0 && h != 0 && i != 0) {
       solveQuadraticEquation(g, h, i); 
     }
   } while (g != 0 && h != 0 && i != 0);
 
-  return 0;
+  return EXIT_SUCCESS;
 }
 
-double calc_discriminant(double a, double b, double c) {
+double getDiscriminant(double a, double b, double c) {
   return b * b - 4 * a * c;
 }
 
-double calc_first_root(double a, double b, double d) {
+double getFirstRoot(double a, double b, double d) {
   return (-b + sqrt(d)) / ( 2 * a);
 }
 
-double calc_second_root(double a, double b, double d) {
+double getSecondRoot(double a, double b, double d) {
   return (-b - sqrt(d))/(2*a);
 }
