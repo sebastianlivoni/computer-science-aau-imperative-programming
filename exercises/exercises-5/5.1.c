@@ -1,6 +1,5 @@
 /*
  * Title: Trinvis forfinelse af solveQuadraticEquation
- * Description: 
  * Assignment: Opgave 5.1 
  * Link to assignment: http://people.cs.aau.dk/%7Enormark/impr-c/functions-anden-grads-ex-pars-slide-exercise-1.html
  * 
