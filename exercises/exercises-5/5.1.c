@@ -4,7 +4,7 @@
  * Link to assignment: http://people.cs.aau.dk/%7Enormark/impr-c/functions-anden-grads-ex-pars-slide-exercise-1.html
  * 
  * Programmer: Sebastian Livoni Larsen
- * Date completed: October 5, 2021
+ * Date completed: October 14, 2021
  * Instructor: Kurt Nørmark * Class: AAL E21
  */ 
 
