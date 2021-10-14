@@ -51,15 +51,17 @@ int main(void) {
   do {
     /* Third call - coefficents are entered by user outside solveQuadraticEquation */
     printf("Enter coeficients a, b, and c: ");
-    if (scanf("%lf %lf %lf", &g, &h, &i) != 3) {
-      printf("Bye! \n");
-      return EXIT_FAILURE;
-    };
-    if (g != 0 && h != 0 && i != 0) {
+
+    // vi tjekker da lige om det er egentligt er 3 doubles som har med at gøre - hvis ikke, så er der ugler i mosen..
+    if (scanf(" %lf %lf %lf", &g, &h, &i) == 3 && g != 0 && h != 0 && i != 0) {
       solveQuadraticEquation(g, h, i); 
+    } else {
+      printf("Goodbye!\n");
+      return EXIT_SUCCESS;
     }
   } while (g != 0 && h != 0 && i != 0);
 
+  printf("Goodbye!\n");
   return EXIT_SUCCESS;
 }
 
