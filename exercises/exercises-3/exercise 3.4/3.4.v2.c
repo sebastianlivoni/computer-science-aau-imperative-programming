@@ -11,28 +11,31 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #define SECONDS_PER_MINUTE (60)
 #define SECONDS_PER_HOUR (60 * SECONDS_PER_MINUTE)
 #define SECONDS_PER_DAY (24 * SECONDS_PER_HOUR)
 #define SECONDS_PER_WEEK (7 * SECONDS_PER_DAY)
 
 int main(void) {
-	int num;
+	double numScan;
 
 	printf("Enter whole number: ");
 
 	//if scanf is not an integer
-	if (!scanf(" %d", &num)) {
+	if (!scanf(" %lf", &numScan)) {
 		printf("Please write an integer\n");
 		exit(EXIT_FAILURE);
 	}
+
+	int num = (int) round(numScan); //round input - % requires integers otherwise use fmod()
 
 	const unsigned int weeks = num / SECONDS_PER_WEEK;
 	const unsigned int days = num / SECONDS_PER_DAY % 7;
 	const unsigned int hours = num / SECONDS_PER_HOUR % 24;
 	const unsigned int minutes = num / SECONDS_PER_MINUTE % 60;
 	const unsigned int seconds = num % 60;
-	
+
 	if (weeks) {
 		printf("%d week%s", weeks, weeks > 1 ? "s" : "");
 	}
