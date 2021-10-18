@@ -1,11 +1,11 @@
 /*
- * Title: 
- * Description: 
- * Assignment: 
- * Link to assignment: 
+ * Title: Seddeludlevering i pengeautomat
+ * Description: Dette program handler om seddeludlevering fra en amerikansk pengeautomat, hvor der kun anvendes 100, 50, 20 og 10 dollar sedler.
+ * Assignment: Opgave 6.3 
+ * Link to assignment: http://people.cs.aau.dk/~normark/impr-c/more-functions-ex-output-pars-slide-exercise-3.html
  * 
  * Programmer: Sebastian Livoni Larsen
- * Date completed: October 4, 2021
+ * Date completed: October 18, 2021
  * Instructor: Kurt Nørmark * Class: AAL E21
  */ 
 
