@@ -31,18 +31,20 @@ int main(void) {
   
   find_max_and_min(a, b, &min, &max);
 
-  if (min % 2 != 0) {
-    min++;
+  int i = min;
+
+  if (i % 2 != 0) {
+    i++;
   }
   
-  for (int i = min; i <= max; i += 2) {
+  for (; i <= max; i += 2) {
     if (check(i) == 0) {
       printf("Der er sgu sket noget som ikke må ske :(\n");
       return EXIT_FAILURE;
     }
   }
 
-  printf("\nCongratulations! All integers between %d and %d is the sum of two odd prime numbers!\n", a, b);
+  printf("\nCongratulations! All integers between %d and %d is the sum of two odd prime numbers!\n", min, max);
 
   return EXIT_SUCCESS;
   
@@ -58,7 +60,7 @@ int check(int n) {
 
   for (int i = 1; i <= max; i += 2) {
     if (is_prime(i) && is_prime(n - i)) {
-      //printf("%d = %d + %d\n", n, i, n - i);
+      printf("%d = %d + %d\n", n, i, n - i);
       return 1;
     }
   }
