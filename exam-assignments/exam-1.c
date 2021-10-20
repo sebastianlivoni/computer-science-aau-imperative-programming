@@ -24,7 +24,7 @@ int main(void) {
 
 }
 
-void run_calculator() {
+void run_calculator(void) {
   double accumulator, operand;
   char operator;
 
@@ -73,14 +73,23 @@ void do_next_op(char operator, double operand, double *accumulator) {
         break;
       case 'q':
         printf("Final result is: %lf\n", *accumulator);
-        exit(1);
+        exit(EXIT_SUCCESS);
     }
   }
 
 }
 
 void scan_data(char *operator, double *operand) {
-  scanf(" %c %lf", operator, operand);
+  scanf(" %c", operator);
+  switch(*operator) {
+    case '+':
+    case '-':
+    case '*':
+    case '/':
+    case '^':
+      // if + - * / ^ we need an operand
+      scanf(" %lf", operand);
+  }
 }
 
 int isBinary(char operator) {
