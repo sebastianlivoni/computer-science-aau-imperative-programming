@@ -14,6 +14,13 @@
 
 typedef double (mathFunc) (double);
 
+double half(double x);
+double multi_apply(mathFunc f, int n, double s);
+
+int main(void) {
+  printf("Value: %lf\n", multi_apply(half, 2, 16.0));
+}
+
 double half(double x){
   return x / 2;
 }
@@ -25,8 +32,3 @@ double multi_apply(mathFunc f, int n, double s) {
 /*double multi_apply(double f (double), int n, double s) {
   return n == 0 ? s : multi_apply(f, n - 1, f(s));
 }*/
-
-
-int main(void) {
-  printf("Value: %lf\n", multi_apply(half, 2, 16.0));
-}
