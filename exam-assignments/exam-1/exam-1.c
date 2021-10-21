@@ -1,5 +1,7 @@
 /*
  * Title: En regnemaskine på kommandolinjen.
+ * Field of study: Computer Science (Datalogi)
+ * Group P1: B205
  * Assignment: Eksamensopgave 1
  * Link to assignment: http://people.cs.aau.dk/~normark/impr-21/eksamensopgaver-e21/Funktioner-parametre/opgave-1.html
  * 
@@ -51,7 +53,7 @@ double run_calculator(void) {
   printf("Example: + 5\n");
   printf("^ The above will add 5 to the accumulator.\n\n");
   printf("The accumulator will start with a value of 0.\n\n");
-  printf("If you at any time need a liste with the valid operators, just type 'h'.\n");
+  printf("If you at any time need a list with the valid operators, just type 'h'.\n");
   printf("When you want to quit, type 'q' to show the final result.\n");
   printf("Otherwise enjoy :)\n\n");
 
@@ -70,7 +72,7 @@ double run_calculator(void) {
 void scan_data(char *operator, double *operand) {
   scanf(" %s", operator);
   
-  if (*operator != '#' && *operator != '%' && *operator != '!' && *operator != '+' && *operator != '-' && *operator != '*' && *operator != '/' && *operator != '^' && *operator != '%') {
+  if (*operator != '#' && *operator != '%' && *operator != '!' && *operator != '+' && *operator != '-' && *operator != '*' && *operator != '/' && *operator != '^' && *operator != '%' && *operator != 'q' && *operator != 'h') {
     printf("You used a wrong operator. Please run the program again.\n");
     exit(-1); /* Wrong operator */
   } 
