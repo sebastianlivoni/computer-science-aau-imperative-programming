@@ -1,5 +1,5 @@
 /*
- * Title: En regnemaskine på kommandolinjen
+ * Title: En regnemaskine på kommandolinjen.
  * Assignment: Eksamensopgave 1
  * Link to assignment: http://people.cs.aau.dk/~normark/impr-21/eksamensopgaver-e21/Funktioner-parametre/opgave-1.html
  * 
