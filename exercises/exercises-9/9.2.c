@@ -17,22 +17,31 @@ double eval_polynomium(const double coeff[], int degree, double x);
 
 int main(void) {
 
-  double coeff[] = {5, 4, 9, 2, 1, 9, 4, 9, 2};
+  /*double coeff[] = {5, 4, 9, 2, 1, 9, 4, 9, 2};*/
   int degree;
-  get_polynomium(coeff, &degree);
+  int* degreep = &degree;
 
-}
-
-void get_polynomium(double coeff[], int *degreep) {
   printf("Please write an integer of max 8 => ");
   scanf(" %d", degreep);
+
+  double coeff[degree];
+
+  get_polynomium(coeff, degreep);
 
   double x;
 
   printf("Please write an x => ");
   scanf(" %lf", &x);
 
-  printf("Sum: %lf", eval_polynomium(coeff, *degreep, x));
+  printf("Sum: %lf\n", eval_polynomium(coeff, degree, x));
+
+}
+
+void get_polynomium(double coeff[], int *degreep) {
+  printf("Please write %d coeffecients.\n", *degreep);
+  for (int i = 0; i < *degreep; i++) {
+    scanf(" %lf", &coeff[i]);
+  }
 }
 
 double eval_polynomium(const double coeff[], int degree, double x) {

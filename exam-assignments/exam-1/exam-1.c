@@ -14,18 +14,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define SQUARE_ROOT '#'
-#define REVERSE '%'
-#define DIVIDE_1_WITH_ACCUMULATOR '!'
-#define EXIT 'q'
-#define ADDITION '+'
-#define SUBTRACTION '-'
-#define MULTIPLY '*'
-#define DIVIDE '/'
-#define SQUARE '^'
-
-#define VALID_OPERATORS {SQUARE_ROOT, REVERSE, DIVIDE_1_WITH_ACCUMULATOR, EXIT, ADDITION, SUBTRACTION, MULTIPLY, DIVIDE, SQUARE}
-
 /* Function prototypes */
 double run_calculator(void);
 void scan_data(char *operator, double *operand);
