@@ -1,7 +1,7 @@
 /*
  * Title: A barcode scanner for Universal Product Codes (UPCs)
  * Assignment: Opgave 5 side 469
- * Link to assignment: Opgave i bogen
+ * Link to assignment: http://people.cs.aau.dk/~normark/impr-15/opgave-hints/noter-pspd7-467-5.html
  * 
  * Programmer: Sebastian Livoni Larsen
  * Date completed: October 21, 2021
@@ -41,10 +41,6 @@ void get_barcode(int barcode[]) {
   for (int i = 0; i < BARCODE_SIZE; i++) {
     scanf(" %d", &barcode[i]);
   }
-
-}
-
-void print_barcode() {
 
 }
 
