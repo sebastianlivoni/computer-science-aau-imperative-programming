@@ -19,6 +19,7 @@ double run_calculator(void);
 void scan_data(char *operator, double *operand);
 void do_next_op(char operator, double operand, double *accumulator);
 int is_binary(char operator);
+int is_unary(char operator);
 void show_help_menu(void);
 
 int main(void) {
@@ -26,7 +27,6 @@ int main(void) {
   printf("Final result is: %lf\n", run_calculator());
 
   return EXIT_SUCCESS;
-
 }
 
 double run_calculator(void) {
@@ -60,21 +60,13 @@ double run_calculator(void) {
 void scan_data(char *operator, double *operand) {
   scanf(" %s", operator);
   
-  if (*operator != '#' && *operator != '%' && *operator != '!' && *operator != '+' && *operator != '-' && *operator != '*' && *operator != '/' && *operator != '^' && *operator != '%' && *operator != 'q' && *operator != 'h') {
-    printf("You used a wrong operator. Please run the program again.\n");
-    exit(-1); /* Wrong operator */
-  } 
-
   switch(*operator) {
     case 'h':
       show_help_menu();
       break;
     case '+': case '-': case '*': case '/': case '^':
       /* if operator is + - * / ^ we need an operand */
-      if (scanf(" %lf", operand) != 1) {
-        printf("You typed a invalid number. Please run the program again.\n");
-        exit(-1); /* Wrong operand */
-      }
+      scanf(" %lf", operand);
       break;
   }
 }
@@ -101,7 +93,7 @@ void do_next_op(char operator, double operand, double *accumulator) {
         *accumulator = pow(*accumulator, operand);
         break;
     }
-  } else {
+  } else if (is_unary(operator)) {
     /* #, %, !, q */
     switch(operator) {
       case '#':
@@ -115,15 +107,26 @@ void do_next_op(char operator, double operand, double *accumulator) {
         if (*accumulator > 0)
           *accumulator = 1 / *accumulator;
     }
+  } else {
+    printf("An error occured and something went completely wrong! Goodbye.\n");
+    exit(EXIT_FAILURE);
   }
 }
 
 int is_binary(char operator) {
   switch (operator) {
     case '+': case '-': case '*': case '/': case '^':
-      return 1; /* is binary */
+      return 1; /* is valid binary */
     default:
-      return 0; /* not binary => instead unary */
+      return 0; /* not valid binary operator => instead unary */
+  }
+}
+int is_unary(char operator) {
+  switch (operator) {
+    case '#': case '%': case '!': case 'h': case 'q':
+      return 1; /* is valid unary */
+    default:
+      return 0; /* not valid unary operator => instead unary */
   }
 }
 
