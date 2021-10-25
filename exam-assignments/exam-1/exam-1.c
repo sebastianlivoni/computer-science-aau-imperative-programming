@@ -1,12 +1,13 @@
 /*
  * Title: En regnemaskine på kommandolinjen.
- * Field of study: Computer Science (Datalogi)
- * Group P1: B205
  * Assignment: Eksamensopgave 1
  * Link to assignment: http://people.cs.aau.dk/~normark/impr-21/eksamensopgaver-e21/Funktioner-parametre/opgave-1.html
  * 
  * Programmer: Sebastian Livoni Larsen
- * Date completed: October 20, 2021
+ * Email: seblar21@student.aau.dk
+ * Group P1: B205
+ * Field of study: Computer Science (Datalogi)
+ * Date completed: October 25, 2021
  * Instructor: Kurt Nørmark * Class: AAL E21
  */ 
 
