@@ -59,7 +59,7 @@ double run_calculator(void) {
 }
 
 void scan_data(char *operator, double *operand) {
-  scanf(" %s", operator);
+  scanf(" %c", operator);
   
   switch(*operator) {
     case 'h':
