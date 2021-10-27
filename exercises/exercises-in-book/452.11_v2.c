@@ -1,7 +1,7 @@
 /*
  * Title: Array merger
  * Description: Merge contents of two sorted arrays of type double
- * Assignment: Page 472 line 11
+ * Assignment: Page 472 exercise 11
  * Link to assignment: In the book
  * 
  * Programmer: Sebastian Livoni Larsen
