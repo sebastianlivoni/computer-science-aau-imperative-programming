@@ -46,8 +46,8 @@ double* merge_arrays(const double* arr1, const int size_arr1, const double* arr2
       size_of_arrays = size_arr1 + size_arr2;
 
   while (i < size_of_arrays) {
-    /* When both arrays still have elements */
     if (count_arr1 < size_arr1 && count_arr2 < size_arr2) {
+      /* While both arrays still have elements */
       if (arr1[count_arr1] < arr2[count_arr2]) {
         merged_arr[i++] = arr1[count_arr1++];
       } else if (arr2[count_arr2] < arr1[count_arr1]) {
@@ -55,8 +55,8 @@ double* merge_arrays(const double* arr1, const int size_arr1, const double* arr2
       } else {
         /* Arr1 & arr2 is equal */
         merged_arr[i++] = arr1[count_arr1++];
-        count_arr2++; /* We want to skip this value and count to next one */
-        size_of_arrays--; /* Because both values are the same, the size of the array is going to be 1 value smaller */
+        count_arr2++;       /* We want to skip this value and count to next one */
+        size_of_arrays--;   /* Because both values are the same, the size of the array is going to be 1 value smaller */
       }
     } else if (count_arr1 < size_arr1) {
       /* Only arr1 left - adding the values left of array 1 to the merged array */
