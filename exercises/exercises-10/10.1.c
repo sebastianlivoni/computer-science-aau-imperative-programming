@@ -13,22 +13,23 @@
 #include <stdlib.h>
 #include <string.h>
 
-void strrev(char *str);
+void str_reverse(char *str);
 
+
+/* This is a comment because it is used in 10.4.c
 int main(void) {
 
   char str[] = "streng";
 
   printf("%s = ", str);
 
-  strrev(str);
+  str_reverse(str);
 
   printf("%s\n", str);
-  
 
-}
+}*/
 
-void strrev(char *str) {
+void str_reverse(char *str) {
   int i;
 
   size_t len = strlen(str);
