@@ -40,7 +40,7 @@ char* to_plural(const char *noun) {
     strcat(noun_copy, "ies");
   } else if (noun_copy[length_noun - 1] == 's') {
     strcat(noun_copy, "es");
-  } else if (noun_copy[length_noun - 1] == 'h' && noun_copy[length_noun - 2] == 's') {
+  } else if (noun_copy[length_noun - 1] == 'h' && noun_copy[length_noun - 2] == 'c') {
     strcat(noun_copy, "es");
   } else if (noun_copy[length_noun - 1] == 's' && noun_copy[length_noun - 2] == 'e') {
     strcat(noun_copy, "es");
