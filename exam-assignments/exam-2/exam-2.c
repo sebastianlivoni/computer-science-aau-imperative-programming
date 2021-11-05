@@ -7,7 +7,7 @@
  * Email: seblar21@student.aau.dk
  * Group P1: B205
  * Field of study: Computer Science (Datalogi)
- * Date completed: October 31, 2021
+ * Date completed: November 03, 2021
  * Instructor: Kurt Nørmark * Class: AAL E21
  */ 
 
@@ -20,71 +20,77 @@
 #define MAX_USED_DICES 5
 #define UPPER_SECTION_MIN_POINTS 63
 #define UPPER_SECTION_BONUS 50
+#define YATZY_SCORE 50
 
 struct Game_of_Yatzy {
   int total_score;
-  int n_dices;
+  int number_of_dices;
   int round;
+  int bonus;
+  int points_per_round[15];
 };
 
-void play_yatzy(void);
-void run_upper_section(struct Game_of_Yatzy *Game);
+enum combinations {ones = 1, twos, threes, fours, fives, sixes, one_pair, two_Pairs, three_of_a_kind, 
+                   four_of_a_kind, small_straight, large_straight, full_house, chance, yatzy};
 
-int sum_of_num(const int arr_dices[], const int num);
-void roll_multiple_dices(int *arr_dices);
-void run_lower_section(int *sum, int arr_dices[]);
-void print_dices(int *arr_dices);
+void play_yatzy(int amount_of_dices);
+void run_upper_section(struct Game_of_Yatzy *Game);
+int sum_of_num(const int arr_dices[], const int num_to_find, struct Game_of_Yatzy *Game);
+char * combination_to_text(const int n);
+void roll_multiple_dices(int *arr_dices, struct Game_of_Yatzy *Game);
+
+void run_lower_section(struct Game_of_Yatzy *Game);
+void print_dices(int *arr_dices, struct Game_of_Yatzy *Game);
 void check_onepair(int *sum, const int *arr_dices);
 
-void pairs(int *sum, int *arr_dices, const int pairs);
-void two_pairs(int *sum, int *arr_dices);
-/* two pairs */
-void straight(int *sum, int *arr_dices, const int *combi_arr);
-/* full house */
-void add_chance(int *sum, const int *arr_dices);
-int check_yatzy(const int *arr_dices);
+void pairs(int *arr_dices, struct Game_of_Yatzy *Game, const int pairs);
+void two_pairs(int *arr_dices, struct Game_of_Yatzy *Game);
+void straight(int *arr_dices, const int *combi_arr, struct Game_of_Yatzy *Game);
+void calc_full_house(int *arr_dices, struct Game_of_Yatzy *Game);
+void add_chance(int *arr_dices, struct Game_of_Yatzy *Game);
+void check_yatzy(int *arr_dices, struct Game_of_Yatzy *Game); /* Need fix */
 
 int main(void) {
   srand(time(NULL));
+  int dices_input_amount, run = 1, test;
 
-  play_yatzy();
+  printf("Get geady for a game of blazing fast Yatzy!\n");
 
-  /*int sum = 0;
-  int arr_dices[NUM_OF_DICES];
+  while (run) {
+    printf("How many dices do you want to play with? => ");
 
-  run_upper_section(&sum, arr_dices);
-
-  run_lower_section(&sum, arr_dices);*/
+    if (scanf(" %d", &dices_input_amount) == 1 && dices_input_amount >= 5) {
+      play_yatzy(dices_input_amount);
+    } else {
+      exit(EXIT_FAILURE);
+    }
+  }
 
   return EXIT_SUCCESS;
 }
 
-void play_yatzy(void) {
+void play_yatzy(int amount_of_dices) {
 
-  printf("Get geady for a game of blazing fast Yatzy!\n");
-
-  struct Game_of_Yatzy Game = {0, 0, 0};
-
-  /*printf("How many dices do you want to play with? => ")
-  scanf(" %d", &n_dices)*/
+  struct Game_of_Yatzy Game = {0, amount_of_dices, 0, 0};
 
   run_upper_section(&Game);
+  run_lower_section(&Game);
 
+  printf("Final result: %d\n", Game.total_score);
 }
 
 void run_upper_section(struct Game_of_Yatzy *Game) {
   printf("--- Upper Section ---\n");
 
-  int arr_dices[NUM_OF_DICES],
-      i, round_sum, total_sum;
+  int arr_dices[Game->number_of_dices], i, round_sum, total_sum;
 
   for (i = 1; i <= 6; i++) {
-    roll_multiple_dices(arr_dices); /* Generate new array of random dices based on time */
+    roll_multiple_dices(arr_dices, Game); /* Generate new array of random dices based on time */
+    round_sum = sum_of_num(arr_dices, i, Game) * i; /* Adding points */
 
     /* Printing */
-    printf("Round %d: %d's = ", ++Game->round, i);
-    print_dices(arr_dices);
-    round_sum = sum_of_num(arr_dices, i) * i; /* Adding points */
+    printf("Round %d - %s: ", ++Game->round, combination_to_text(i));
+    print_dices(arr_dices, Game);
     printf("= %d points\n", round_sum);
 
     total_sum += round_sum;
@@ -92,6 +98,7 @@ void run_upper_section(struct Game_of_Yatzy *Game) {
   }
 
   if (total_sum >= UPPER_SECTION_MIN_POINTS) {
+    Game->bonus = 1; /* Bonus is true */
     Game->total_score += UPPER_SECTION_BONUS;
     printf("You recived a bonus of %d points because you managed to get more than %d points in the upper sectiond.\n", UPPER_SECTION_BONUS, UPPER_SECTION_MIN_POINTS);
   }
@@ -101,89 +108,135 @@ void run_upper_section(struct Game_of_Yatzy *Game) {
   printf("--- End of Upper Section ---\n");
 }
 
-void run_lower_section(int *sum, int arr_dices[]) {
-
-  const int SMALL_STRAIGHT[] = {1, 2, 3, 4, 5},
-            LARGE_STRAIGHT[] = {2, 3, 4, 5, 6};
-
-  roll_multiple_dices(arr_dices);
-  print_dices(arr_dices);
-  printf("\n");
-  straight(sum, arr_dices, SMALL_STRAIGHT);
-
-  roll_multiple_dices(arr_dices);
-  print_dices(arr_dices);
-  printf("\n");
-  straight(sum, arr_dices, LARGE_STRAIGHT);
-
-  roll_multiple_dices(arr_dices);
-  arr_dices[0] = 2;
-  arr_dices[1] = 2;
-  arr_dices[2] = 4;
-  arr_dices[3] = 4;
-  arr_dices[4] = 3;
-  arr_dices[5] = 3;
-  arr_dices[6] = 6;
-  print_dices(arr_dices);
-  printf("\n");
-  pairs(sum, arr_dices, 2);
-
-  roll_multiple_dices(arr_dices);
-  print_dices(arr_dices);
-  printf("\n");
-  pairs(sum, arr_dices, 3);
-
-  roll_multiple_dices(arr_dices);
-  print_dices(arr_dices);
-  printf("\n");
-  pairs(sum, arr_dices, 4);
-
-  roll_multiple_dices(arr_dices);
-  print_dices(arr_dices);
-  printf("\n");
-  two_pairs(sum, arr_dices);
-
-}
-
-int sum_of_num(const int arr_dices[], const int num) {
-  int sum = 0,
-      count = 0,
-      i;
-  for (i = 0; i <= NUM_OF_DICES; i++)
-    if (arr_dices[i] == num && count < MAX_USED_DICES) {
+int sum_of_num(const int arr_dices[], const int num_to_find, struct Game_of_Yatzy *Game) {
+  int sum = 0, count = 0, i;
+  
+  for (i = 0; i <= Game->number_of_dices; i++) {
+    if (arr_dices[i] == num_to_find && count < MAX_USED_DICES) {
       sum += 1;
       count++;
     }
+  }
   return sum;
 }
 
-void roll_multiple_dices(int *arr_dices) {
-  for (int i = 0; i < NUM_OF_DICES; i++)
+void roll_multiple_dices(int *arr_dices, struct Game_of_Yatzy *Game) {
+  for (int i = 0; i < Game->number_of_dices; i++)
     arr_dices[i] = (rand() % DIE_MAX_EYES) + 1;
 }
 
-void print_dices(int *arr_dices) {
+void print_round(struct Game_of_Yatzy *Game, int *arr_dices) {
+  printf("Round %d - %s: ", Game->round, combination_to_text(Game->round));
+}
+
+void print_dices(int *arr_dices, struct Game_of_Yatzy *Game) {
+  printf("Round %d - %s: ", Game->round, combination_to_text(Game->round));
   int i;
-  for (i = 0; i < NUM_OF_DICES; i++) {
+  for (i = 0; i < Game->number_of_dices; i++) {
     printf("%d ", arr_dices[i]);
   }
 }
 
-int find_elem(int elem, int array[]) {
-  for (int i = 0; i < NUM_OF_DICES; i++) {
-    if (array[i] == elem) {
-      return array[i];
+void run_lower_section(struct Game_of_Yatzy *Game) {
+
+  printf("--- Lower Section ---\n");
+
+  int arr_dices[Game->number_of_dices], n = 2;
+
+  /* Pairs (one pair, two pairs, three of a kind / four of a kind) */
+  for (int i = 2; i <= 5; i++) {
+    roll_multiple_dices(arr_dices, Game);
+    Game->round++;
+    if (i == 3) {
+      two_pairs(arr_dices, Game);
+    } else {
+      pairs(arr_dices, Game, n);
+      n++;
     }
   }
-  return -1;
+
+  const int SMALL_STRAIGHT[] = {1, 2, 3, 4, 5},
+            LARGE_STRAIGHT[] = {2, 3, 4, 5, 6};
+
+  /* Small straight */
+  roll_multiple_dices(arr_dices, Game);
+  Game->round++;
+  straight(arr_dices, SMALL_STRAIGHT, Game);
+
+  /* Large straight */
+  roll_multiple_dices(arr_dices, Game);
+  Game->round++;
+  straight(arr_dices, LARGE_STRAIGHT, Game);
+
+  /* Full house */
+  roll_multiple_dices(arr_dices, Game);
+  Game->round++;
+  calc_full_house(arr_dices, Game);
+
+  /* Chance */
+  roll_multiple_dices(arr_dices, Game);
+  Game->round++;
+  add_chance(arr_dices, Game);
+
+  /* Yatzy */
+  roll_multiple_dices(arr_dices, Game);
+  Game->round++;
+  check_yatzy(arr_dices, Game);
+
+  printf("--- End of Lower Section ---\n");
+
 }
 
-void pairs(int *sum, int *arr_dices, const int pairs) {
+int cmp_fnc(const void *a, const void *b) {
+  return (*(int*)a - *(int*)b);
+}
+
+int count_elem(int *arr_dices, int n, struct Game_of_Yatzy *Game) {
+  int count = 0;
+  for (int i = 0; i < Game->number_of_dices; i++) {
+    if (n == arr_dices[i]) {
+      count++;
+    }
+  }
+  return count;
+}
+
+void calc_full_house(int *arr_dices, struct Game_of_Yatzy *Game) {
+  int count = 0, array[Game->number_of_dices];
+  print_dices(arr_dices, Game);
+  for (int i = 1; i <= DIE_MAX_EYES; i++) {
+    count = count_elem(arr_dices, i, Game);
+    array[i - 1] = count;
+  }
+
+  /* Biggest 3 */
+  int biggest_3 = 0;
+  for (int i = 0; i < DIE_MAX_EYES; i++) {
+    if (array[i] >= 3) {
+      biggest_3 = i;
+    }
+  }
+  int biggest_2 = 0;
+  for (int j = 0; j < DIE_MAX_EYES; j++) {
+    if (array[j] >= 2 && biggest_3 != j) {
+      biggest_2 = j;
+    }
+  }
+  if (biggest_3 > 0 && biggest_2 > 0) {
+    int score = (biggest_3 + 1) * 3 + (biggest_2 + 1) * 2;
+    printf("= %d points\n", score);
+    Game->total_score += score;
+  } else {
+    printf("= 0 points\n");
+  }
+}
+
+void pairs(int *arr_dices, struct Game_of_Yatzy *Game, const int pairs) {
   /*static int pairs[6][2] = {{6,6}, {5,5}, {4,4}, {3,3}, {2,2}, {1,1}};*/
   int pair = 0, pairs_count = 0, pairs_sum = 0, pair_second = 0;
   for (int i = 1; i <= 6; i++) {
     int local_i = 0;
-    for (int j = 0; j < NUM_OF_DICES; j++) {
+    for (int j = 0; j < Game->number_of_dices; j++) {
       if (arr_dices[j] == i) {
         local_i++;
       }
@@ -193,21 +246,23 @@ void pairs(int *sum, int *arr_dices, const int pairs) {
       pairs_count++;
     }
   }
+  
+  print_dices(arr_dices, Game);
   if (pair > 0) {
-    sum += pair * pairs;
-    printf("Best pair: %d - you get +%d points\n", pair, pair * pairs);
+    Game->total_score += pair * pairs;
+    printf("= %d points\n", pair * pairs);
   } else {
-    printf("No pairs...\n");
+    printf("= 0 points\n");
   }
 }
 
-void two_pairs(int *sum, int *arr_dices) {
+void two_pairs(int *arr_dices, struct Game_of_Yatzy *Game) {
   int pairs = 0;
   int pair1 = 0;
   int pair2 = 0;
   for (int i = 1; i <= 6; i++) {
     int count = 0;
-    for (int j = 0; j < NUM_OF_DICES; j++) {
+    for (int j = 0; j < Game->number_of_dices; j++) {
     /*printf("%d %d\n", i, arr_dices[j]);*/
       if (i == arr_dices[j]) {
         /*printf("%d %d\n", i, arr_dices[j]);*/
@@ -226,17 +281,30 @@ void two_pairs(int *sum, int *arr_dices) {
     } 
   }
   int add_sum = pair1 * 2 + pair2 * 2;
-  *sum = add_sum;
+  Game->total_score += add_sum;
+  
+  print_dices(arr_dices, Game);
   if (pairs > 1) {
-    printf("Two pairs %d & %d - Added sum: %d\n", pair1, pair2, add_sum);
+    printf("= %d points\n", add_sum);
+  } else {
+    printf("= 0 points\n");
   }
   /*printf("Pairs: %d - pair1: %d - pair2: %d\n", pairs, pair1, pair2);*/
 }
 
-void straight(int *sum, int *arr_dices, const int *combi_arr) {
+int find_elem(int elem, int array[], struct Game_of_Yatzy *Game) {
+  for (int i = 0; i < Game->number_of_dices; i++) {
+    if (array[i] == elem) {
+      return array[i];
+    }
+  }
+  return -1;
+}
+
+void straight(int *arr_dices, const int *combi_arr, struct Game_of_Yatzy *Game) {
   int i, elem, is_straight = 1, straight_sum = 0;
   for (i = 0; i < 5; i++) {
-    elem = find_elem(combi_arr[i], arr_dices);
+    elem = find_elem(combi_arr[i], arr_dices, Game);
     if (elem < 1) {
       is_straight = 0;
     } else {
@@ -244,28 +312,75 @@ void straight(int *sum, int *arr_dices, const int *combi_arr) {
     }
   }
 
+  
+  print_dices(arr_dices, Game);
+
   if (is_straight) {
-    printf("Wuhu - is small/large straight! +%d points!\n", straight_sum);
-    *sum = straight_sum;
+    printf("= %d points\n", straight_sum);
+    /*printf("Wuhu - is small/large straight! +%d points!\n", straight_sum);*/
+    Game->total_score += straight_sum;
   } else {
-    printf("Not small/large straight!\n");
+    printf("= 0 points\n");
+    /*printf("Not small/large straight!\n");*/
   }
-
 }
 
-int check_yatzy(const int *arr_dices) {
-  int i, last = arr_dices[0];
-  for (i = 1; i < NUM_OF_DICES; i++) {
-    if (arr_dices[i] != last) {
-      return 0;
+void check_yatzy(int *arr_dices, struct Game_of_Yatzy *Game) {
+  int i, is_yatzy = 0;
+  for (i = 1; i <= NUM_OF_DICES; i++) {
+    int count_i = 0;
+    for (int j = 0; j < Game->number_of_dices; j++) {
+      if (arr_dices[j] == i) {
+        count_i++;
+      }
     }
+    if (count_i >= MAX_USED_DICES) {
+      is_yatzy = 1;
+    } 
   }
-  return 1;
+  
+  
+  print_dices(arr_dices, Game);
+  
+  if (is_yatzy == 1) {
+    printf("= %d points\n", YATZY_SCORE);
+    Game->total_score += YATZY_SCORE;
+  } else {
+    printf("= 0 points\n");
+  }
 }
 
-void add_chance(int *sum, const int *arr_dices) {
-  int i;
-  for (i = 0; i < NUM_OF_DICES; i++) {
-    *sum += arr_dices[i];
+void add_chance(int *arr_dices, struct Game_of_Yatzy *Game) {
+  int i, sum = 0;
+  qsort(arr_dices, Game->number_of_dices, sizeof(int), cmp_fnc);
+  for (i = Game->number_of_dices - 1; i > Game->number_of_dices - MAX_USED_DICES - 1; i--) {
+    sum += arr_dices[i];
   }
+  
+  print_dices(arr_dices, Game);
+  printf("= %d points\n", sum);
+  Game->total_score += sum;
+}
+
+char * combination_to_text(const int n) {
+  char * value_text;
+  switch(n) {
+    case 1: value_text = "Ones"; break;
+    case 2: value_text = "Twos"; break;
+    case 3: value_text = "Threes"; break;
+    case 4: value_text = "Fours"; break;
+    case 5: value_text = "Fives"; break;
+    case 6: value_text = "Sixes"; break;
+    case 7: value_text = "One Pair"; break;
+    case 8: value_text = "Two Pairs"; break;
+    case 9: value_text = "Three of a Kind"; break;
+    case 10: value_text = "Four of a Kind"; break;
+    case 11: value_text = "Small Straight"; break;
+    case 12: value_text = "Large Straight"; break;
+    case 13: value_text = "Full House"; break;
+    case 14: value_text = "Chance"; break;
+    case 15: value_text = "Yatzy"; break;
+    default: value_text = "N/A";
+  }
+  return value_text;
 }
