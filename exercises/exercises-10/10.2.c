@@ -17,7 +17,7 @@ int strcmp_rec(char *a, char *b);
 
 int main(void) {
 
-  printf("Stringcompare: %d\n", strcmp_rec("hej", "hej"));
+  printf("Stringcompare: %d\n", strcmp_rec("lort", "lort"));
 
 }
 
