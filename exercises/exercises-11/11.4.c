@@ -21,22 +21,22 @@ int do_round(int x, int y, int grid[MAX_X][MAX_Y]);
 
 int main(void) {
 
-  int grid_original[5][5] = {
+  /*int grid_original[5][5] = {
     {1, 1, 0, 0, 1},
     {0, 1, 1, 0, 1},
     {1, 0, 1, 0, 0},
     {1, 0, 0, 1, 1},
     {0, 1, 0, 1, 1},
-  };
-  /*int grid_original[5][5] = {
+  };*/
+  int grid_original[5][5] = {
     {1, 1, 0, 0, 0},
-    {0, 1, 1, 0, 1},
+    {0, 1, 1, 0, 0},
     {0, 0, 1, 0, 1},
     {1, 0, 0, 0, 1},
     {0, 1, 0, 1, 1},
-  };*/
+  };
 
-  printf("Blob count: %d\n", blob_count(1, 1, grid_original));
+  printf("Blob count: %d\n", blob_count(4, 4, grid_original));
 
 }
 
