@@ -28,7 +28,6 @@ int main(void) {
 
 }
 
-
 void biggest_common_suffix(char *word1, char *word2, char *longest_suffix) {
   int i = strlen(word1) - 1,
       j = strlen(word2) - 1;

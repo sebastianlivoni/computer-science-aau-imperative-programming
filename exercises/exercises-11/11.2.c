@@ -16,14 +16,13 @@
 char* is_palindrome(int (f)(char*), char *sequence);
 int is_palindrome_iter(char *str);
 int is_palindrome_rec(char *str);
-int palindrome_rec(char *str, int i, int j);
+int do_palindrome_rec(char *str);
 
 int main(void) {
   char sequence[1000];
   int run = 1;
-
-  /*system("clear");*/
-  printf("Welcome to Seb's Blazing Insanely Fast and Meticulous Palindrome Checker!\nType 'quit' to quit.\n\n");
+  
+  printf("\nWelcome to Seb's Blazing Insanely Fast and Meticulous Palindrome Checker!\nType 'quit' to quit.\n\n");
 
   while (run) {
     printf("What sequence do you want to check palindrome on? => ");
@@ -37,9 +36,10 @@ int main(void) {
         "\nIs '%s' a palindrome?\n\n"
         "%s, using iterative method.\n"
         "%s, using recursive method.\n\n",
-      sequence,
-      is_palindrome(&is_palindrome_iter, sequence),
-      is_palindrome(&is_palindrome_rec, sequence));
+        sequence,
+        is_palindrome(&is_palindrome_iter, sequence),
+        is_palindrome(&is_palindrome_rec, sequence)
+      );
     }
   }
 }
@@ -63,16 +63,26 @@ int is_palindrome_iter(char *str) {
 }
 
 int is_palindrome_rec(char *str) {
+  /* Need to copy to a new string */
+  char str_copy[strlen(str)];
+  strcpy(str_copy, str);
+  return do_palindrome_rec(str_copy);
+}
+
+int do_palindrome_rec(char *str) {
   int str_len = strlen(str);
   if (str_len == 0) {
     return 1; /* Yes, it is palindrome */
   } else if (str[0] != str[str_len - 1]) {
     return 0; /* Nope, not a palindrome */
   } else {
+    /* Use recursive function from str[1] to str[length - 1] */
     str[str_len - 1] = '\0';
-    return is_palindrome_rec(&str[1]);
+    return do_palindrome_rec(&str[1]);
   }
 }
+
+/* First Try - But in two functions */
 
 /*
 int is_palindrome_rec(char *str) {
