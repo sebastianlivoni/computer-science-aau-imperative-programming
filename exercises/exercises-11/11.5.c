@@ -12,12 +12,10 @@
 #include <stdio.h>
 
 int gcd_recursive(int large, int small) {
-  int remainder;
   if (small == 0) {
     return large;
   } else {
-    remainder = large % small;
-    return gcd_recursive(small, remainder);
+    return gcd_recursive(small, large % small);
   }
 }
 

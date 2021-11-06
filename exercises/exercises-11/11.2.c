@@ -22,7 +22,7 @@ int main(void) {
   char sequence[1000];
   int run = 1;
 
-  system("clear");
+  /*system("clear");*/
   printf("Welcome to Seb's Blazing Insanely Fast and Meticulous Palindrome Checker!\nType 'quit' to quit.\n\n");
 
   while (run) {
@@ -49,17 +49,32 @@ char* is_palindrome(int (f)(char*), char *sequence) {
 }
 
 int is_palindrome_iter(char *str) {
-  int i = 0, j = strlen(str) - 1, is_palindrome = 1;
+  int i = 0,
+      j = strlen(str) - 1;
+  
   while (is_palindrome > 0 && j >= 0) {
     if (str[i] == str[j]) {
       i++; j--;
     } else {
-      is_palindrome = 0;
+      return 0; /* Nope, not a palindrome */
     }
   }
-  return is_palindrome;
+  return 1; /* Yes, it is palindrome */
 }
 
+int is_palindrome_rec(char *str) {
+  int str_len = strlen(str);
+  if (str_len == 0) {
+    return 1; /* Yes, it is palindrome */
+  } else if (str[0] != str[str_len - 1]) {
+    return 0; /* Nope, not a palindrome */
+  } else {
+    str[str_len - 1] = '\0';
+    return is_palindrome_rec(&str[1]);
+  }
+}
+
+/*
 int is_palindrome_rec(char *str) {
   return palindrome_rec(str, 0, strlen(str) - 1);
 }
@@ -72,3 +87,4 @@ int palindrome_rec(char *str, int i, int j) {
   else 
     return palindrome_rec(str, ++i, --j);
 }
+*/
