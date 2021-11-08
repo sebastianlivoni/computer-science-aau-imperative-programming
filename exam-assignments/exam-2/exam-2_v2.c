@@ -49,10 +49,11 @@ int main(void) {
 }
 
 void play_game_yatzy(void) {
-  struct Game_of_Yatzy Game = {0, 1, 1, 5}; /* total score: 0, round: 1, bonus: 1, number_of_dices: 5 */
-  int points;
+  int points, i;
 
-  for (int i = 1; i <= ROUNDS; i++, Game.round++) {
+  struct Game_of_Yatzy Game = {0, 1, 1, 5}; /* total score: 0, round: 1, bonus: 1, number_of_dices: 5 */
+
+  for (i = 1; i <= ROUNDS; i++, Game.round++) {
     roll_multiple_dices(&Game);
     points = combinations[i - 1](&Game);
     Game.round_points[i - 1] = points;
@@ -88,8 +89,9 @@ void print_dices(struct Game_of_Yatzy *Game) {
 }
 
 void roll_multiple_dices(struct Game_of_Yatzy *Game) {
-  int random_dice;
-  for (int i = 0; i < Game->number_of_dices; i++) {
+  int i, random_dice;
+
+  for (i = 0; i < Game->number_of_dices; i++) {
     random_dice = (rand() % MAX_DIE_EYES) + 1;
 
     Game->round_arr_dices[Game->round][i] = random_dice;
