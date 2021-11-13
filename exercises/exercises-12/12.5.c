@@ -5,7 +5,7 @@
  * Link to assignment: http://people.cs.aau.dk/~normark/impr-c/structures-flere-opgaver-slide-exercise-1.html
  * 
  * Programmer: Sebastian Livoni Larsen
- * Date completed: November 5, 2021
+ * Date completed: November 13, 2021
  * Instructor: Kurt Nørmark * Class: AAL E21
  */ 
 
