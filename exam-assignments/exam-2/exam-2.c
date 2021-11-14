@@ -326,7 +326,6 @@ void straight(int *arr_dices, const int *combi_arr, struct Game_of_Yatzy *Game) 
     }
   }
 
-  
   print_dices(arr_dices, Game);
 
   if (is_straight) {
