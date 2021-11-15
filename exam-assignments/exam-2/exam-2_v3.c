@@ -47,6 +47,7 @@ void generate_random_numbers(int *arr_dices, const int amount_of_dices);
 int count_num(const int *arr_dices, const int n, const int amount_of_dices);
 void print_round(Game_of_Yatzy *Game);
 char * enum_combination_to_string(const int n);
+int get_points(const int *round_points, const int round);
 
 /* Lower section */
 void do_lower_section(Game_of_Yatzy *Game);
@@ -134,15 +135,16 @@ void play_game_of_yatzy(const int amount_of_dices) {
   }
 
   do_upper_section(&Game);
+  printf("Upper section points: %d\n", get_points(Game.round_points, Game.round));
   do_lower_section(&Game);
 
   for (i = 0; i < TOTAL_ROUNDS; i++) {
     total_points += Game.round_points[i];
   }
-  /*if (Game.is_bonus == 1) {
+  if (Game.is_bonus == 1) {
     total_points += 1;
-    printf("You recieved %d points because you a minimum of %d points in upper section.\n", UPPER_SECTION_BONUS, UPPER_SECTION_MIN_POINTS);
-  }*/
+    printf("You recieved %d points because you got a minimum of %d points in upper section.\n", UPPER_SECTION_BONUS, UPPER_SECTION_MIN_POINTS);
+  }
   printf("Total points: %d\n", total_points);
 
   for (i = 0; i < TOTAL_ROUNDS; i++) {
@@ -158,6 +160,18 @@ void do_upper_section(Game_of_Yatzy *Game) {
     print_round(Game);
     Game->round++;
   }
+
+  if (get_points(Game->round_points, Game->round) >= UPPER_SECTION_MIN_POINTS) {
+    Game->is_bonus = 1;
+  }
+}
+
+int get_points(const int *round_points, const int round) {
+  int i, sum = 0;
+  for (i = 0; i < round; i++) {
+    sum += round_points[i];
+  }
+  return sum;
 }
 
 int count_num(const int *arr_dices, const int n, const int amount_of_dices) {
