@@ -142,7 +142,7 @@ void play_game_of_yatzy(const int amount_of_dices) {
     total_points += Game.round_points[i];
   }
   if (Game.is_bonus == 1) {
-    total_points += 1;
+    total_points += YATZY_SCORE;
     printf("You recieved %d points because you got a minimum of %d points in upper section.\n", UPPER_SECTION_BONUS, UPPER_SECTION_MIN_POINTS);
   }
   printf("Total points: %d\n", total_points);

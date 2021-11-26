@@ -20,6 +20,11 @@ typedef struct {
   int value;
 } card;
 
+typedef union {
+  int joker;
+  int card;
+} playing_card;
+
 card generate_deck();
 int sort_deck(const void *a, const void *b);
 char* suit_to_text(int suit);
