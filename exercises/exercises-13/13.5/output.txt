@@ -1,0 +1,11 @@
+Hadsten: Jensen
+Bredsten: Jensen
+Hovborg: Larsen
+Aalborg: Madsen
+Greve: Moberg
+Dalmose: Olsen
+Hjerm: Olsen
+Glostrup: Rask
+Hvidovre: Rastrup
+Randers: Rise
+Hobro: Rise
