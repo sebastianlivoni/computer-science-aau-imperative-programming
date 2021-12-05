@@ -15,11 +15,11 @@
 
 #define MAX_LINE_LENGTH 100
 
-void print_lines_keyword(char *keyword, char *data_file_url);
+void grep(char *keyword, char *data_file_url);
 
 int main(int argc, char *argv[]) {
   if (argc == 3) {
-    print_lines_keyword(argv[1], argv[2]);
+    grep(argv[1], argv[2]);
   } else {
     printf("Please type 2 arguments: <keyword> <data file url>");
     exit(EXIT_FAILURE);
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 
 }
 
-void print_lines_keyword(char *keyword, char *data_file_url) {
+void grep(char *keyword, char *data_file_url) {
   FILE *fp;
   char line[100];
   int line_i;
