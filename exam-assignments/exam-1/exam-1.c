@@ -15,6 +15,23 @@
 #include <stdlib.h>
 #include <math.h>
 
+#define IS_VALID  1
+#define NOT_VALID 0
+
+/* Binary operators */
+#define ADDITION_OPERATOR '+'
+#define SUBTRACT_OPERATOR '-'
+#define MULTIPLY_OPERATOR '*'
+#define DIVIDE_OPERATOR   '/'
+#define POWER_OPERATOR    '^'
+
+/* Unary operators */
+#define SQAURE_ROOT_OPERATOR '#'
+#define REVERSE_OPERATOR     '%'
+#define DIVIDE_ONE_OPERATOR  '!'
+#define HELP_MENU_OPERATOR   'h'
+#define EXIT_OPERATOR        'q'
+
 /* Function prototypes */
 double run_calculator(void);
 void scan_data(char *operator, double *operand);
@@ -25,7 +42,7 @@ void show_help_menu(void);
 
 int main(void) {
 
-  printf("Final result is: %lf\n", run_calculator());
+  printf("Final result is: \033[1;37m%.6lf\033[0;37m\n", run_calculator());
 
   return EXIT_SUCCESS;
 }
@@ -38,12 +55,12 @@ double run_calculator(void) {
 
   printf("\nWelcome to Seb's Calculating Machine.\n\n");
 
-  printf("To calculate, type in the operator and operand in using this format: <operator> <operand>\n\n");
-  printf("Example: + 5\n");
+  printf("To calculate, type in the operator and operand in using this format: \033[1;37m<operator> <operand>\033[0;37m\n\n");
+  printf("Example: \033[1;37m+ 5\033[0;37m\n");
   printf("^ The above will add 5 to the accumulator.\n\n");
   printf("The accumulator will start with a value of 0.\n\n");
-  printf("If you at any time need a list with the valid operators, just type 'h'.\n");
-  printf("When you want to quit, type 'q' to show the final result.\n");
+  printf("If you at any time need a list with the valid operators, just type \033[1;37m'h'\033[0;37m.\n");
+  printf("When you want to quit, type \033[1;37m'q'\033[0;37m to show the final result.\n");
   printf("Otherwise enjoy :)\n\n");
 
   do {
@@ -51,9 +68,9 @@ double run_calculator(void) {
     scan_data(&operator, &operand);
     do_next_op(operator, operand, &accumulator);
     if (operator != 'q') {
-     printf("Result so far is %lf\n", accumulator); 
+     printf("Result so far is \033[1;37m%.6lf\033[0;37m\n", accumulator); 
     }
-  } while (operator != 'q');
+  } while (operator != EXIT_OPERATOR);
 
   return accumulator;
 }
@@ -62,11 +79,11 @@ void scan_data(char *operator, double *operand) {
   scanf(" %c", operator);
   
   switch(*operator) {
-    case 'h':
+    case HELP_MENU_OPERATOR:
       show_help_menu();
       break;
-    case '+': case '-': case '*': case '/': case '^':
-      /* if operator is + - * / ^ we need an operand */
+    case ADDITION_OPERATOR: case SUBTRACT_OPERATOR: case MULTIPLY_OPERATOR: case DIVIDE_OPERATOR: case POWER_OPERATOR:
+      /* if operator is + - * / ^ we need an operand and must scanf again */
       scanf(" %lf", operand);
       break;
   }
@@ -74,60 +91,60 @@ void scan_data(char *operator, double *operand) {
 
 void do_next_op(char operator, double operand, double *accumulator) {
 
-  if (is_binary(operator)) {
+  if (is_binary(operator) == IS_VALID) {
     /* + - * / ^ */
     switch(operator) {
-      case '+':
+      case ADDITION_OPERATOR:
         *accumulator += operand;
         break;
-      case '-':
+      case SUBTRACT_OPERATOR:
         *accumulator -= operand;
         break;
-      case '*':
+      case MULTIPLY_OPERATOR:
         *accumulator *= operand;
         break;
-      case '/':
+      case DIVIDE_OPERATOR:
         if (operand != 0)
           *accumulator /= operand;
         break;
-      case '^':
+      case POWER_OPERATOR:
         *accumulator = pow(*accumulator, operand);
         break;
     }
-  } else if (is_unary(operator)) {
-    /* #, %, !, q */
+  } else if (is_unary(operator) == IS_VALID) {
+    /* #, %, ! */
     switch(operator) {
-      case '#':
+      case SQAURE_ROOT_OPERATOR:
         if (*accumulator > 0)
           *accumulator = sqrt(*accumulator);
         break;
-      case '%':
+      case REVERSE_OPERATOR:
         *accumulator = -*accumulator;
         break;
-      case '!':
+      case DIVIDE_ONE_OPERATOR:
         if (*accumulator > 0)
           *accumulator = 1 / *accumulator;
     }
   } else {
-    printf("An error occured and something went completely wrong! Goodbye.\n");
+    printf("An error occured and maybe you typed an invalid operator! Goodbye.\n");
     exit(EXIT_FAILURE);
   }
 }
 
 int is_binary(char operator) {
   switch (operator) {
-    case '+': case '-': case '*': case '/': case '^':
-      return 1; /* is valid binary */
+    case ADDITION_OPERATOR: case SUBTRACT_OPERATOR: case MULTIPLY_OPERATOR: case DIVIDE_OPERATOR: case POWER_OPERATOR:
+      return IS_VALID; /* is valid binary */
     default:
-      return 0; /* not valid binary operator => instead unary */
+      return NOT_VALID; /* not valid binary operator => instead unary */
   }
 }
 int is_unary(char operator) {
   switch (operator) {
-    case '#': case '%': case '!': case 'h': case 'q':
-      return 1; /* is valid unary */
+    case SQAURE_ROOT_OPERATOR: case REVERSE_OPERATOR: case DIVIDE_ONE_OPERATOR: case HELP_MENU_OPERATOR: case EXIT_OPERATOR:
+      return IS_VALID; /* is valid unary */
     default:
-      return 0; /* not valid unary operator => instead unary */
+      return NOT_VALID; /* not valid unary operator => instead unary */
   }
 }
 
@@ -137,17 +154,19 @@ void show_help_menu(void) {
   printf(" |          |            Valid binary operators                    |\n");
   printf(" +----------+------------------------------------------------------+\n");
   printf(" | Operator |                    Description                       |\n");
-  printf(" |    +     |  addition of the accumulator with the operand        |\n");
-  printf(" |    -     |  subtraction of the accumulator with the operand     |\n");
-  printf(" |    *     |  multiplication of the accumulator with the operand  |\n");
-  printf(" |    /     |  division of the accumulator with the operand        |\n");
-  printf(" |    ^     |  power of the accumulator with the operand           |\n");
+  printf(" |    %c     |  addition of the accumulator with the operand        |\n", ADDITION_OPERATOR);
+  printf(" |    %c     |  subtraction of the accumulator with the operand     |\n", SUBTRACT_OPERATOR);
+  printf(" |    %c     |  multiplication of the accumulator with the operand  |\n", MULTIPLY_OPERATOR);
+  printf(" |    %c     |  division of the accumulator with the operand        |\n", DIVIDE_OPERATOR);
+  printf(" |    %c     |  power of the accumulator with the operand           |\n", POWER_OPERATOR);
   printf(" +----------+------------------------------------------------------+\n");
   printf(" |          |             Valid unary operators                    |\n");
   printf(" +----------+------------------------------------------------------+\n");
-  printf(" |    #     |  the square root of the accumulator                  |\n");
-  printf(" |    %%     |  reverse the number sign of the accumulator          |\n");
-  printf(" |    !     |  divide 1 with the accumulator                       |\n");
-  printf(" |    q     |  exit the calculator with the end result             |\n");
+  printf(" |    %c     |  the square root of the accumulator                  |\n", SQAURE_ROOT_OPERATOR);
+  printf(" |    %c     |  reverse the sign of the accumulator                 |\n", REVERSE_OPERATOR);
+  printf(" |    %c     |  divide 1 with the accumulator                       |\n", DIVIDE_ONE_OPERATOR);
+  printf(" |    %c     |  exit the calculator with the end result             |\n", EXIT_OPERATOR);
   printf(" +----------+------------------------------------------------------+\n\n");
+
+  /* C90 compoilers are required to support a maximum of 509 - there a lot of printf's */
 }

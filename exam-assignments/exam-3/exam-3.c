@@ -37,10 +37,8 @@ struct game {
   char week_day[100];
   char date[100];
   char time[100];
-  /*team home_team;
-  team away_team;*/
-  char home_team[100];
-  char away_team[100];
+  char home_team[4];
+  char away_team[4];
   int result[2];
   int spectators;
 };
@@ -62,7 +60,6 @@ int main(void) {
   FILE* input_fp;
   game* games;
   team* teams;
-  /*FILE* output_fp;*/
   
   input_fp = load_file(INPUT_FILE_URL);
 
@@ -73,6 +70,7 @@ int main(void) {
 
   prnt_positions(teams);
 
+  return EXIT_SUCCESS;
 }
 
 FILE* load_file(char* file_url) {
