@@ -42,7 +42,9 @@ void show_help_menu(void);
 
 int main(void) {
 
-  printf("Final result is: \033[1;37m%.6lf\033[0;37m\n", run_calculator());
+  double final_result = run_calculator();
+
+  printf("Final result is: \033[1;37m%.6lf\033[0;37m\n", final_result);
 
   return EXIT_SUCCESS;
 }
@@ -68,7 +70,7 @@ double run_calculator(void) {
     scan_data(&operator, &operand);
     do_next_op(operator, operand, &accumulator);
     if (operator != 'q') {
-     printf("Result so far is \033[1;37m%.6lf\033[0;37m\n", accumulator); 
+     printf("Result so far is \033[1;37m%.6lf\033[0;37m.\n", accumulator); 
     }
   } while (operator != EXIT_OPERATOR);
 
@@ -134,17 +136,17 @@ void do_next_op(char operator, double operand, double *accumulator) {
 int is_binary(char operator) {
   switch (operator) {
     case ADDITION_OPERATOR: case SUBTRACT_OPERATOR: case MULTIPLY_OPERATOR: case DIVIDE_OPERATOR: case POWER_OPERATOR:
-      return IS_VALID; /* is valid binary */
+      return IS_VALID; 
     default:
-      return NOT_VALID; /* not valid binary operator => instead unary */
+      return NOT_VALID;
   }
 }
 int is_unary(char operator) {
   switch (operator) {
     case SQAURE_ROOT_OPERATOR: case REVERSE_OPERATOR: case DIVIDE_ONE_OPERATOR: case HELP_MENU_OPERATOR: case EXIT_OPERATOR:
-      return IS_VALID; /* is valid unary */
+      return IS_VALID; 
     default:
-      return NOT_VALID; /* not valid unary operator => instead unary */
+      return NOT_VALID;
   }
 }
 
