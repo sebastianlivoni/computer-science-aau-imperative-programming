@@ -127,22 +127,19 @@ int add_team_scores(char *team_name, int goals_scored, int goals_against, team* 
   int index;
 
   index = index_of_team(team_name, teams);
-  if (index != NOT_FOUND) {
-    teams[index].goals_scored += goals_scored;
-    teams[index].goals_against += goals_against;
-    teams[index].points += goals_scored > goals_against ? POINTS_GAME_WON : goals_scored == goals_against ? POINTS_GAME_DRAW : POINTS_GAME_LOST;
-    return index;
-  } else {
+
+  if (index == NOT_FOUND) {
     index = hash_team_name(team_name);
     while (!is_empty(teams[index])) {
       index = next_index(index);
     }
 
     strcpy(teams[index].team_name, team_name);
-    teams[index].goals_scored = goals_scored;
-    teams[index].goals_against = goals_against;
-    teams[index].points = goals_scored > goals_against ? POINTS_GAME_WON : goals_scored == goals_against ? POINTS_GAME_DRAW : POINTS_GAME_LOST;
   }
+  
+  teams[index].goals_scored += goals_scored;
+  teams[index].goals_against += goals_against;
+  teams[index].points += goals_scored > goals_against ? POINTS_GAME_WON : goals_scored == goals_against ? POINTS_GAME_DRAW : POINTS_GAME_LOST;
   
   return index;
 }

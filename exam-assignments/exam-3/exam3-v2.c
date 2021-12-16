@@ -30,12 +30,12 @@ typedef enum {monday, tuesday, wednesday, thursday, friday, saturday, sunday} We
 typedef struct tm Date; /* Structure containing a calendar date and time broken down into its components. */
 
 typedef struct {
-  unsigned short mp; /* matches played */
-  unsigned short w; /* won */
-  unsigned short d; /* draw */
-  unsigned short l; /* loss */
-  unsigned short gf; /* goals for */
-  unsigned short ga; /* goals against */
+  unsigned short matches_played; /* matches played */
+  unsigned short wins; /* won */
+  unsigned short draws; /* draw */
+  unsigned short loss; /* loss */
+  unsigned short goals_for; /* goals for */
+  unsigned short goals_against; /* goals against */
   unsigned short pts; /* points */
   char club[5]; /* club name */
 } Team;
@@ -56,23 +56,25 @@ typedef struct {
 
 /* Prototypes */
 FILE *open_file(char *file_url);
-void load_data(FILE* file, HashTable *teams, HashTable *matches);
+void load_matches(FILE* file, HashTable *teams, HashTable *matches);
 void assert_mem_allocation(HashTable *table);
 Date convert_to_date(char *date, char *time);
 int hash_map(char *str);
-HashTable *create_table();
+HashTable *create_hashtable(int size);
 int next_index(int index);
 int index_of_team(HashTable *teams, char *team);
 void add_match(HashTable *matches, HashTable *teams, char *home, char *away, unsigned int *result, unsigned int spectators, Weekday weekday, Date date);
 void print_date(Date date);
 int is_empty(Team *team);
+void throughput_match_results(HashTable *teams, HashTable *matches);
+void add_match_result_teams(HashTable *teams, Match *match, char *home_team, char *away_team);
 
 int main(void) {
   FILE *input_fp;
   int i;
 
-  HashTable *matches = create_table();
-  HashTable *teams = create_table();
+  HashTable *matches = create_hashtable(TOTAL_MATCHES);
+  HashTable *teams = create_hashtable(TOTAL_TEAMS);
 
   for (i = 0; i < TOTAL_TEAMS; i++) {
     Team *team = malloc(sizeof(Team));
@@ -82,7 +84,13 @@ int main(void) {
 
   input_fp = open_file(INPUT_FILE_URL);
 
-  load_data(input_fp, teams, matches);
+  load_matches(input_fp, teams, matches);
+
+  throughput_match_results(teams, matches);
+
+  Team *my_team = teams->items[6];
+
+  printf("%s %d\n", my_team->club, my_team->pts);
 
   free(matches);
   free(teams);
@@ -100,9 +108,7 @@ FILE *open_file(char *file_url) {
   }
 }
 
-void load_data(FILE* file, HashTable *teams, HashTable *matches) {
-  Date new_date;
-  
+void load_matches(FILE* file, HashTable *teams, HashTable *matches) {
   char file_line[MAX_LINE_CHARACTERS];
   char weekday_lol[10],
        date[10],
@@ -111,6 +117,7 @@ void load_data(FILE* file, HashTable *teams, HashTable *matches) {
        time[10];
   
   Weekday weekday = monday;
+  Date new_date;
 
   unsigned int result[2],
                spectators;
@@ -131,51 +138,92 @@ int hash_map(char *str) {
   return sum % TOTAL_TEAMS;
 }
 
-HashTable *create_table() {
-  /*HashTable *table = (HashTable*) malloc(sizeof(HashTable));*/
-  HashTable *table = (HashTable*) malloc(sizeof(HashTable) * TOTAL_TEAMS);
+HashTable *create_hashtable(int size) {
+  HashTable *table = (HashTable*) malloc(sizeof(HashTable) * size);
 
   assert_mem_allocation(table);
 
-  table->items = malloc(TOTAL_TEAMS);
+  table->items = malloc(size);
   table->count = 0;
 
   return table;
 }
 
 void add_match(HashTable *matches, HashTable *teams, char *home, char *away, unsigned int *result, unsigned int spectators, Weekday weekday, Date date) {
-  Match *match = malloc(sizeof(Match));
+  Match *new_match = malloc(sizeof(Match));
 
-  int index = index_of_team(teams, home);
+  Team *home_team = teams->items[index_of_team(teams, home)];
+  Team *away_team = teams->items[index_of_team(teams, away)];
   
-  if (index == NOT_FOUND) {
-    index = hash_map(home);
-    while (!is_empty((Team*)teams->items[index])) {
-      index = next_index(index);
-    }
+  /* Copying all of the data into the match struct */
+  new_match->home = home_team;
+  new_match->away = away_team;
+  memcpy(&new_match->result, &result, sizeof(result)); /* Copy the result array into the structs array */
+  new_match->spectators = spectators;
+  new_match->weekday = weekday;
+  new_match->date_time = date;
 
-    Team *team = (Team*)teams->items[index];
+  matches->items[matches->count] = new_match;
+  matches->count += 1;
+}
 
-    strcpy(team->club, home);
+void throughput_match_results(HashTable *teams, HashTable *matches) {
+  int i;
 
-    printf("Added team: %s %d\n", team->club, index);
+  for (i = 0; i < matches->count; i++) {
+    Match *match = matches->items[i];
+
+    add_match_result_teams(teams, match, ((Team*)match->home)->club, ((Team*)match->away)->club);
+    /* I princippet kunne jeg egentlig bare overføre en pointer til teamet i stedet for at oveførte navnet og derefter finde index... */
   }
 
-  /*match->result[0] = result[0];
-  match->result[1] = result[1];
-  match->spectators = spectators;
-  match->weekday = weekday;
-  match->date_time = date;
+}
 
-  matches->items[matches->count++] = match;*/
+void add_match_result_teams(HashTable *teams, Match *match, char *home_team_name, char *away_team_name) {
+  Team *home_team = teams->items[index_of_team(teams, home_team_name)];
+  Team *away_team = teams->items[index_of_team(teams, away_team_name)];
+
+  home_team->matches_played += 1;
+  away_team->matches_played += 1;
+
+  home_team->goals_for += match->result[0];
+  home_team->goals_against += match->result[1];
+
+  away_team->goals_for += match->result[1];
+  away_team->goals_against += match->result[0];
+
+  if (match->result[0] > match->result[1]) {
+    home_team->pts += POINTS_GAME_WON;
+    home_team->wins += 1;
+  } else if (match->result[1] > match->result[0]) {
+    away_team->pts += POINTS_GAME_WON;
+    away_team->wins += 1;
+  } else {
+    home_team->pts += POINTS_GAME_DRAW;
+    home_team->draws += 1;
+    away_team->pts += POINTS_GAME_DRAW;
+    away_team->draws += 1;
+  }
 }
 
 int index_of_team(HashTable *teams, char *team_name) {
   int index = hash_map(team_name);
-  if (!is_empty(((Team*)teams->items[index]))) {
-    return index;
+
+  /* Looping through until the array is both empty and team_name is not the same */
+  while (!is_empty((teams->items[index])) && strcmp(team_name, ((Team*)teams->items[index])->club) != 0) {
+    index = next_index(index);
   }
-  return NOT_FOUND;
+
+  /* Now we have an index for the team_name */
+  if (is_empty(teams->items[index])) {
+    /* The index team name is empty and we want to set it to something for it to not be empty */
+    Team *team = (Team*)teams->items[index];
+
+
+    strcpy(team->club, team_name);
+  }
+
+  return index;
 }
 
 int is_empty(Team *team) {
@@ -183,7 +231,7 @@ int is_empty(Team *team) {
 }
 
 int next_index(int index) {
-  return index < TOTAL_TEAMS - 1 ? index + 1 : 0;
+  return (index < TOTAL_TEAMS - 1) ? index + 1 : 0;
 }
 
 Date convert_to_date(char *date, char *time) {
