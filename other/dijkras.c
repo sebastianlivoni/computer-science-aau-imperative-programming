@@ -3,7 +3,7 @@
 
 #define MATRIX_LENGTH 5
 #define INFINITY 10000
-#define UNDEFINED -1
+#define UNDEFINED -1¡
 #define REMOVED -2<
 #define SOURCE_ELEMENT 0
 
@@ -22,7 +22,7 @@ int main(void) {
         {1, 2, 0, 0, 1}, /* D */
         {0, 2, 5, 1, 0}  /* E */
     };
-
+        
     int unvisited_count = MATRIX_LENGTH;
 
     for (i = 0; i < MATRIX_LENGTH; i++) {
