@@ -1,6 +1,6 @@
 /*
  * Title: Fodboldturnering
- * Assignment:  Eksamensopgave 3
+ * Assignment: Eksamensopgave 3
  * Link to assignment: http://people.cs.aau.dk/~normark/impr-21/eksamensopgaver-e21/Filer-IO/opgave-3.html
  * 
  * Programmer: Sebastian Livoni Larsen
