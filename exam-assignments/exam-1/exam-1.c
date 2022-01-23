@@ -34,7 +34,7 @@
 
 /* Function prototypes */
 double run_calculator(void);
-void scan_data(char *operator, double *operand);
+int scan_data(char *operator, double *operand);
 void do_next_op(char operator, double operand, double *accumulator);
 int is_binary(char operator);
 int is_unary(char operator);
@@ -67,17 +67,18 @@ double run_calculator(void) {
 
   do {
     printf("Enter operator, and an optional operand => ");
-    scan_data(&operator, &operand);
-    do_next_op(operator, operand, &accumulator);
-    if (operator != 'q') {
-     printf("Result so far is \033[1;37m%.6lf\033[0;37m.\n", accumulator); 
+    if (scan_data(&operator, &operand)) {
+      do_next_op(operator, operand, &accumulator);
+      if (operator != 'q') {
+      printf("Result so far is \033[1;37m%.6lf\033[0;37m.\n", accumulator); 
+      }
     }
   } while (operator != EXIT_OPERATOR);
 
   return accumulator;
 }
 
-void scan_data(char *operator, double *operand) {
+int scan_data(char *operator, double *operand) {
   scanf(" %c", operator);
   
   switch(*operator) {
@@ -88,7 +89,14 @@ void scan_data(char *operator, double *operand) {
       /* if operator is + - * / ^ we need an operand and must scanf again */
       scanf(" %lf", operand);
       break;
+    case EXIT_OPERATOR:
+      break;
+    default:
+      printf("Please try again\n");
+      return 0;
   }
+
+  return 1;
 }
 
 void do_next_op(char operator, double operand, double *accumulator) {

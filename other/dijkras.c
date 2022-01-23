@@ -3,8 +3,8 @@
 
 #define MATRIX_LENGTH 5
 #define INFINITY 10000
-#define UNDEFINED -1¡
-#define REMOVED -2<
+#define UNDEFINED -1
+#define REMOVED -2
 #define SOURCE_ELEMENT 0
 
 int find_min_vertex(int matrix[MATRIX_LENGTH][MATRIX_LENGTH], int dist[MATRIX_LENGTH]);
@@ -22,7 +22,7 @@ int main(void) {
         {1, 2, 0, 0, 1}, /* D */
         {0, 2, 5, 1, 0}  /* E */
     };
-        
+
     int unvisited_count = MATRIX_LENGTH;
 
     for (i = 0; i < MATRIX_LENGTH; i++) {
@@ -34,16 +34,14 @@ int main(void) {
 
     while (unvisited_count > 0) {
         u = find_min_vertex(matrix, dist);
-        if (u != INFINITY) {”
+        if (u != INFINITY) {
+
             matrix[u][u] = REMOVED;
             
             for (neighbor = 0; neighbor < MATRIX_LENGTH; neighbor++) {
                 edge = matrix[u][neighbor];
                 if (matrix[neighbor][neighbor] != REMOVED && edge > 0) {
-
                     alt = dist[u] + edge;
-
-
                     if (alt < dist[neighbor]) {
                         dist[neighbor] = alt;
                         prev[neighbor] = u;

@@ -146,6 +146,7 @@ int add_team_scores(char *team_name, int goals_scored, int goals_against, team* 
 
 int index_of_team(char *team_name, team* teams) {
   int index = hash_team_name(team_name);
+  // hvis der er et team på index'et OG teamnavnet ikke er det samme som det vi søger efter så går vi videre indtil at det er det.
   while (!is_empty(teams[index]) && strcmp(team_name, teams[index].team_name) != 0) {
     index = next_index(index);
   }
